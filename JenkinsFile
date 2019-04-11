@@ -44,12 +44,17 @@ pipeline {
         stage('Publish') {
             steps {
                 ansiColor('xterm') {
-                    sshagent(['jenkins-ssh-key']) {
+                    checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'deploy']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-ssh-key', url: 'git@gitlab.supercharge.io:revolutionrobotics/blockly-ios.git']]]
+                    dir ('deploy') {         
                         script {
-                            sh 'echo asdfasdf'                            
+                            def ret = sh(script: 'ls -al', returnStdout: true)
+                            println ret                                                    
                         }
+                        sh 'cp ../blockly_compressed.js blockly_compressed.js'
+                        sh 'cp ../blocks_compressed.js blocks_compressed.js'    
+                        sh 'git status'
                     }
-                }
+               }
             }
         }
     }
