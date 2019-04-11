@@ -46,7 +46,8 @@ pipeline {
                 ansiColor('xterm') {
                     sh 'rm -rf deploy'
                     checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'deploy']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-ssh-key', url: 'git@gitlab.supercharge.io:revolutionrobotics/blockly-js.git']]]
-                    dir ('deploy') {         
+                    dir ('deploy') {   
+                        sh 'git checkout master'      
                         script {
                             def ret = sh(script: 'ls -al', returnStdout: true)
                             println ret                                                    
@@ -60,10 +61,11 @@ pipeline {
                         sh 'cp ../blockly/python_compressed.js Blockly/python_compressed.js'    
                         sh 'cp -R ../blockly/msg/ Blockly/msg/'
                         sh 'cp -R ../blockly/media/ Blockly/media/'
+                        
                         sh 'git status'
                         sh 'git add .'
-                        sh "git commit -m 'Updated by ${env.BUILD_TAG}'"
-                        sh "git push -u origin/master"
+                        sh "git commit -m 'Updated by ${env.BUILD_TAG}'"                        
+                        sh "git push"
                     }
                }
             }
