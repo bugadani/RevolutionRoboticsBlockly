@@ -1,0 +1,57 @@
+#!/usr/bin/env groovy
+
+library 'jarvis@v1.2.1'
+
+pipeline {
+	agent {
+	   node {
+		    label 'xcode102'
+	    }       
+    }
+
+    options {
+        gitLabConnection('SC GitLab')
+        gitlabBuilds(builds: ['jenkins'])
+        buildDiscarder(logRotator(artifactNumToKeepStr: '20', numToKeepStr: '20'))
+    }
+
+    post {
+        success {		
+            archiveArtifacts artifacts: 'blockly/**/*compressed.js'
+        }
+    }
+
+    stages {
+        stage('Checkout & Merge') {
+            steps {
+                step([$class: 'WsCleanup'])
+                checkoutGitLabMR repo: 'revolutionrobotics/blockly-src'
+            }
+        }
+        stage('Build') {
+            steps {
+                ansiColor('xterm') {
+                    sshagent(['jenkins-ssh-key']) {
+                        dir('blockly') {
+                            script {
+                                sh 'npm ci'
+                                sh 'python build.py'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                ansiColor('xterm') {
+                    sshagent(['jenkins-ssh-key']) {
+                        script {
+                            sh 'echo asdfasdf'                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
