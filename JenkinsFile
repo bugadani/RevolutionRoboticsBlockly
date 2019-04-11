@@ -56,6 +56,8 @@ pipeline {
                         }
                         sh 'cp ../blockly/blockly_compressed.js Blockly/blockly_compressed.js'
                         sh 'cp ../blockly/blocks_compressed.js Blockly/blocks_compressed.js'    
+                        sh 'cp -R ../blockly/msg/ Blockly/'
+                        sh 'cp -R ../blockly/media/ Blockly/'
                         sh 'git status'
                     }
                }
