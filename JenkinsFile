@@ -32,7 +32,8 @@ pipeline {
                     sshagent(['jenkins-ssh-key']) {
                         dir('blockly') {
                             script {
-                                sh 'npm ci'
+                                sh 'npm install'
+                                sh 'npm run prepare'
                                 sh 'python build.py'
                             }
                         }
