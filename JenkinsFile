@@ -21,13 +21,7 @@ pipeline {
         }
     }
 
-    stages {
-        stage('Checkout & Merge') {
-            steps {
-                step([$class: 'WsCleanup'])
-                checkoutGitLabMR repo: 'revolutionrobotics/blockly-src'
-            }
-        }
+    stages {        
         stage('Build') {
             steps {
                 ansiColor('xterm') {
@@ -42,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Build') {
+        stage('Publish') {
             steps {
                 ansiColor('xterm') {
                     sshagent(['jenkins-ssh-key']) {
