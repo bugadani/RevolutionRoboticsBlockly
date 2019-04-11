@@ -54,8 +54,8 @@ pipeline {
                             def ret = sh(script: 'ls -al ../', returnStdout: true)
                             println ret                                                    
                         }
-                        sh 'cp ../blockly_compressed.js Blockly/blockly_compressed.js'
-                        sh 'cp ../blocks_compressed.js Blockly/blocks_compressed.js'    
+                        sh 'cp ..blockly/blockly_compressed.js Blockly/blockly_compressed.js'
+                        sh 'cp ..blockly/blocks_compressed.js Blockly/blocks_compressed.js'    
                         sh 'git status'
                     }
                }
