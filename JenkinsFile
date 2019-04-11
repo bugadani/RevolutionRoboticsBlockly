@@ -44,6 +44,7 @@ pipeline {
         stage('Publish') {
             steps {
                 ansiColor('xterm') {
+                    sh 'rm -rf deploy'
                     checkout changelog: false, poll: false, scm: [$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'deploy']], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'jenkins-ssh-key', url: 'git@gitlab.supercharge.io:revolutionrobotics/blockly-js.git']]]
                     dir ('deploy') {         
                         script {
