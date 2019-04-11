@@ -62,7 +62,7 @@ pipeline {
                         sh 'cp -R ../blockly/media/ Blockly/media/'
                         sh 'git status'
                         sh 'git add .'
-                        sh "git commit -m 'Updated by $ENV.BUILD_ID'"
+                        sh "git commit -m 'Updated by ${env.BUILD_ID}'"
                         sh "git push origin master"
                     }
                }
