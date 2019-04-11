@@ -8,6 +8,10 @@ pipeline {
 		    label 'xcode102'
 	    }       
     }
+    
+    tools {
+        nodejs 'NodeJS 9.11.2 & npm 6.4.0 & yarn 1.9.4'
+    }
 
     options {
         gitLabConnection('SC GitLab')
