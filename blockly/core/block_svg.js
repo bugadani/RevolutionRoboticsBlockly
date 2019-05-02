@@ -970,7 +970,7 @@ Blockly.BlockSvg.prototype.setBorderColour_ = function(rgb, colourTertiary) {
   if (colourTertiary) {
     this.svgPathLight_.setAttribute('stroke', 'none');
     this.svgPathDark_.setAttribute('fill', 'none');
-    this.svgPath_.setAttribute('stroke', 'none');
+    this.svgPath_.setAttribute('stroke', colourTertiary);
   } else {
     this.svgPathLight_.style.display = '';
     var hexLight = goog.color.rgbArrayToHex(goog.color.lighten(rgb, 0.3));
@@ -986,10 +986,9 @@ Blockly.BlockSvg.prototype.setBorderColour_ = function(rgb, colourTertiary) {
  * Sets the colour of shadow blocks.
  * @param {!string} rgb Primary colour of the block.
  * @param {?string} colourSecondary Colour for shadow block.
- * @return {!string} hexColour The background color of the block.
+ * @return {!string} The background colour of the block.
  */
-Blockly.BlockSvg.prototype.setShadowColour_ = function(
-    rgb, colourSecondary) {
+Blockly.BlockSvg.prototype.setShadowColour_ = function(rgb, colourSecondary) {
   var hexColour;
   if (colourSecondary) {
     this.svgPathLight_.style.display = 'none';

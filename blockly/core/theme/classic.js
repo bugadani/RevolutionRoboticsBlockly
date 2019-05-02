@@ -31,7 +31,7 @@ goog.require('Blockly.Theme');
 
 var defaultBlockStyles = {
   "colour_blocks":{
-    "colourPrimary": "#0264ff"
+    "colourPrimary": "#f8bc08"
   },
   "list_blocks": {
     "colourPrimary": "260"
@@ -43,16 +43,16 @@ var defaultBlockStyles = {
     "colourPrimary": "120"
   },
   "math_blocks": {
-    "colourPrimary": "#e60312"
+    "colourPrimary": "#4dc88f"
   },
   "procedure_blocks": {
-    "colourPrimary": "#0264ff"
+    "colourPrimary": "290"
   },
   "text_blocks": {
     "colourPrimary": "160"
   },
   "variable_blocks": {
-    "colourPrimary": "#e60312"
+    "colourPrimary": "330"
   },
   "variable_dynamic_blocks":{
     "colourPrimary": "310"
@@ -65,19 +65,19 @@ var defaultBlockStyles = {
 
 var categoryStyles = {
   "colour_category":{
-    "colour": "#e60312"
+    "colour": "20"
   },
   "list_category": {
-    "colour": "#f8bc08"
+    "colour": "260"
   },
   "logic_category": {
-    "colour": "#0264ff"
+    "colour": "210"
   },
   "loop_category": {
-    "colour": "#dd7d3a"
+    "colour": "120"
   },
   "math_category": {
-    "colour": "#4dc88f"
+    "colour": "230"
   },
   "procedure_category": {
     "colour": "290"
