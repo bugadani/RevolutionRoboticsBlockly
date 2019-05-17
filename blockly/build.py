@@ -203,9 +203,6 @@ class Gen_compressed(threading.Thread):
     if ('core' in self.bundles):
       self.gen_core()
 
-    if ('accessible' in self.bundles):
-      self.gen_accessible()
-
     if ('core' in self.bundles or 'accessible' in self.bundles):
       self.gen_blocks()
 
@@ -550,9 +547,6 @@ developers.google.com/blockly/guides/modify/web/closure""")
   # Uncompressed is limited by processor speed.
   if ('core' in args):
     Gen_uncompressed(core_search_paths, 'blockly_uncompressed.js').start()
-
-  if ('accessible' in args):
-    Gen_uncompressed(full_search_paths, 'blockly_accessible_uncompressed.js').start()
 
   # Compressed is limited by network and server speed.
   Gen_compressed(full_search_paths, args).start()

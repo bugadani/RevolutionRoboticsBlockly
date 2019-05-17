@@ -143,7 +143,11 @@ Blockly.FieldDropdown.prototype.showEditor_ = function() {
   Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, null);
   var menu = this.createMenu_();
   this.addActionListener_(menu);
-  this.positionMenu_(menu);
+
+  var event = new Blockly.Events.Ui(null, 'selected', null, null);
+  event.workspaceId = this.sourceBlock_.workspace.id;
+  event.targetField = this;
+  Blockly.Events.fire(event);
 };
 
 /**
@@ -240,6 +244,7 @@ Blockly.FieldDropdown.prototype.createWidget_ = function(menu) {
   menu.render(div);
   Blockly.utils.addClass(menu.getElement(), 'blocklyDropdownMenu');
   // Enable autofocus after the initial render to avoid issue #1329.
+
   menu.setAllowAutoFocus(true);
 };
 

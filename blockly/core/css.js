@@ -801,11 +801,27 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.motorIcon:before {',
-    'background-image: url("<<<PATH>>>/quote1.png");',   
+    'background-image: url("./media/moves.svg");',   
   '}',
 
   '.sensorIcon:before {',
-    'background-image: url("<<<PATH>>>/quote0.png");',   
+    'background-image: url("./media/sensors.svg");',   
+  '}',
+
+  '.loopsIcon:before {',
+  'background-image: url("./media/loop.svg");',   
+  '}',
+
+  '.logicIcon:before {',
+  'background-image: url("./media/logic.svg");',   
+  '}',
+
+  '.mathIcon:before {',
+  'background-image: url("./media/math.svg");',   
+  '}',
+
+  '.timeIcon:before {',
+  'background-image: url("./media/time.svg");',   
   '}',
 
   /* End of Icons */
