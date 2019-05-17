@@ -34,7 +34,6 @@ goog.require('Blockly.utils');
 goog.require('goog.math.Coordinate');
 goog.require('goog.userAgent');
 
-
 /**
  * Class for an editable text field.
  * @param {string} text The initial content of the field.
@@ -46,8 +45,7 @@ goog.require('goog.userAgent');
  * @constructor
  */
 Blockly.FieldTextInput = function(text, opt_validator) {
-  Blockly.FieldTextInput.superClass_.constructor.call(this, text,
-      opt_validator);
+  Blockly.FieldTextInput.superClass_.constructor.call(this, text, opt_validator);
 };
 goog.inherits(Blockly.FieldTextInput, Blockly.Field);
 
@@ -107,7 +105,8 @@ Blockly.FieldTextInput.prototype.dispose = function() {
  * @override
  */
 Blockly.FieldTextInput.prototype.setValue = function(newValue) {
-  if (newValue !== null) { // No change if null.
+  if (newValue !== null) {
+    // No change if null.
     if (this.sourceBlock_) {
       var validated = this.callValidator(newValue);
       // If the new value is invalid, validation returns null.
@@ -135,8 +134,9 @@ Blockly.FieldTextInput.prototype.setText = function(newText) {
     return;
   }
   if (this.sourceBlock_ && Blockly.Events.isEnabled()) {
-    Blockly.Events.fire(new Blockly.Events.BlockChange(
-        this.sourceBlock_, 'field', this.name, this.text_, newText));
+    Blockly.Events.fire(
+        new Blockly.Events.BlockChange(this.sourceBlock_, 'field', this.name, this.text_, newText)
+    );
   }
   Blockly.Field.prototype.setText.call(this, newText);
 };
@@ -156,14 +156,13 @@ Blockly.FieldTextInput.prototype.setSpellcheck = function(check) {
  * @protected
  */
 Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
-  this.workspace_ = this.sourceBlock_.workspace;
-  var quietInput = opt_quietInput || false;
-  if (!quietInput && (goog.userAgent.MOBILE || goog.userAgent.ANDROID ||
-                      goog.userAgent.IPAD)) {
-    this.showPromptEditor_();
-  } else {
-    this.showInlineEditor_(quietInput);
-  }
+  // this.workspace_ = this.sourceBlock_.workspace;
+  // var quietInput = opt_quietInput || false;
+  // if (!quietInput && (goog.userAgent.MOBILE || goog.userAgent.ANDROID || goog.userAgent.IPAD)) {
+  this.showPromptEditor_();
+  // } else {
+  //   this.showInlineEditor_(quietInput);
+  // }
 };
 
 /**
@@ -173,14 +172,12 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
  */
 Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
   var fieldText = this;
-  console.log(this);
-  Blockly.prompt(Blockly.Msg['CHANGE_VALUE_TITLE'], this.text_,
-      function(newValue) {
-        if (fieldText.sourceBlock_) {
-          newValue = fieldText.callValidator(newValue);
-        }
-        fieldText.setValue(newValue);
-      });
+  Blockly.prompt(Blockly.Msg['CHANGE_VALUE_TITLE'], this.text_, function(newValue) {
+    if (fieldText.sourceBlock_) {
+      newValue = fieldText.callValidator(newValue);
+    }
+    fieldText.setValue(newValue);
+  });
 };
 
 /**
@@ -196,8 +193,7 @@ Blockly.FieldTextInput.prototype.showInlineEditor_ = function(quietInput) {
   var htmlInput = document.createElement('input');
   htmlInput.className = 'blocklyHtmlInput';
   htmlInput.setAttribute('spellcheck', this.spellcheck_);
-  var fontSize =
-      (Blockly.FieldTextInput.FONTSIZE * this.workspace_.scale) + 'pt';
+  var fontSize = Blockly.FieldTextInput.FONTSIZE * this.workspace_.scale + 'pt';
   div.style.fontSize = fontSize;
   htmlInput.style.fontSize = fontSize;
 
@@ -224,17 +220,26 @@ Blockly.FieldTextInput.prototype.showInlineEditor_ = function(quietInput) {
  */
 Blockly.FieldTextInput.prototype.bindEvents_ = function(htmlInput) {
   // Bind to keydown -- trap Enter without IME and Esc to hide.
-  htmlInput.onKeyDownWrapper_ =
-      Blockly.bindEventWithChecks_(
-          htmlInput, 'keydown', this, this.onHtmlInputKeyDown_);
+  htmlInput.onKeyDownWrapper_ = Blockly.bindEventWithChecks_(
+      htmlInput,
+      'keydown',
+      this,
+      this.onHtmlInputKeyDown_
+  );
   // Bind to keyup -- trap Enter; resize after every keystroke.
-  htmlInput.onKeyUpWrapper_ =
-      Blockly.bindEventWithChecks_(
-          htmlInput, 'keyup', this, this.onHtmlInputChange_);
+  htmlInput.onKeyUpWrapper_ = Blockly.bindEventWithChecks_(
+      htmlInput,
+      'keyup',
+      this,
+      this.onHtmlInputChange_
+  );
   // Bind to keyPress -- repeatedly resize when holding down a key.
-  htmlInput.onKeyPressWrapper_ =
-      Blockly.bindEventWithChecks_(
-          htmlInput, 'keypress', this, this.onHtmlInputChange_);
+  htmlInput.onKeyPressWrapper_ = Blockly.bindEventWithChecks_(
+      htmlInput,
+      'keypress',
+      this,
+      this.onHtmlInputChange_
+  );
   htmlInput.onWorkspaceChangeWrapper_ = this.resizeEditor_.bind(this);
   this.workspace_.addChangeListener(htmlInput.onWorkspaceChangeWrapper_);
 };
@@ -248,8 +253,7 @@ Blockly.FieldTextInput.prototype.unbindEvents_ = function(htmlInput) {
   Blockly.unbindEvent_(htmlInput.onKeyDownWrapper_);
   Blockly.unbindEvent_(htmlInput.onKeyUpWrapper_);
   Blockly.unbindEvent_(htmlInput.onKeyPressWrapper_);
-  this.workspace_.removeChangeListener(
-      htmlInput.onWorkspaceChangeWrapper_);
+  this.workspace_.removeChangeListener(htmlInput.onWorkspaceChangeWrapper_);
 };
 
 /**
@@ -259,7 +263,9 @@ Blockly.FieldTextInput.prototype.unbindEvents_ = function(htmlInput) {
  */
 Blockly.FieldTextInput.prototype.onHtmlInputKeyDown_ = function(e) {
   var htmlInput = Blockly.FieldTextInput.htmlInput_;
-  var tabKey = 9, enterKey = 13, escKey = 27;
+  var tabKey = 9,
+    enterKey = 13,
+    escKey = 27;
   if (e.keyCode == enterKey) {
     Blockly.WidgetDiv.hide();
     Blockly.DropDownDiv.hideIfOwner(this);
@@ -411,15 +417,16 @@ Blockly.FieldTextInput.prototype.maybeSaveEdit_ = function() {
  * @return {?string} A string representing a valid number, or null if invalid.
  */
 Blockly.FieldTextInput.numberValidator = function(text) {
-  console.warn('Blockly.FieldTextInput.numberValidator is deprecated. ' +
-               'Use Blockly.FieldNumber instead.');
+  console.warn(
+      'Blockly.FieldTextInput.numberValidator is deprecated. ' + 'Use Blockly.FieldNumber instead.'
+  );
   if (text === null) {
     return null;
   }
   text = String(text);
   // TODO: Handle cases like 'ten', '1.203,14', etc.
   // 'O' is sometimes mistaken for '0' by inexperienced users.
-  text = text.replace(/O/ig, '0');
+  text = text.replace(/O/gi, '0');
   // Strip out thousands separators.
   text = text.replace(/,/g, '');
   var n = parseFloat(text || 0);
