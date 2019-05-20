@@ -41,7 +41,6 @@ goog.require('goog.ui.Menu');
 goog.require('goog.ui.MenuItem');
 goog.require('goog.userAgent');
 
-
 /**
  * Which block is the context menu attached to?
  * @type {Blockly.Block}
@@ -69,14 +68,15 @@ Blockly.ContextMenu.show = function(e, options, rtl) {
   }
   var menu = Blockly.ContextMenu.populate_(options, rtl);
 
-  goog.events.listen(
-      menu, goog.ui.Component.EventType.ACTION, Blockly.ContextMenu.hide);
+  goog.events.listen(menu, goog.ui.Component.EventType.ACTION, Blockly.ContextMenu.hide);
 
   Blockly.ContextMenu.position_(menu, e, rtl);
   // 1ms delay is required for focusing on context menus because some other
   // mouse event is still waiting in the queue and clears focus.
-  setTimeout(function() {menu.getElement().focus();}, 1);
-  Blockly.ContextMenu.currentBlock = null;  // May be set by Blockly.Block.
+  setTimeout(function() {
+    menu.getElement().focus();
+  }, 1);
+  Blockly.ContextMenu.currentBlock = null; // May be set by Blockly.Block.
 };
 
 /**
@@ -94,14 +94,13 @@ Blockly.ContextMenu.populate_ = function(options, rtl) {
   */
   var menu = new goog.ui.Menu();
   menu.setRightToLeft(rtl);
-  for (var i = 0, option; option = options[i]; i++) {
+  for (var i = 0, option; (option = options[i]); i++) {
     var menuItem = new goog.ui.MenuItem(option.text);
     menuItem.setRightToLeft(rtl);
     menu.addChild(menuItem, true);
     menuItem.setEnabled(option.enabled);
     if (option.enabled) {
-      goog.events.listen(
-          menuItem, goog.ui.Component.EventType.ACTION, option.callback);
+      goog.events.listen(menuItem, goog.ui.Component.EventType.ACTION, option.callback);
       menuItem.handleContextMenu = function(/* e */) {
         // Right-clicking on menu option should count as a click.
         goog.events.dispatchEvent(this, goog.ui.Component.EventType.ACTION);
@@ -156,8 +155,7 @@ Blockly.ContextMenu.createWidget_ = function(menu) {
   var menuDom = menu.getElement();
   Blockly.utils.addClass(menuDom, 'blocklyContextMenu');
   // Prevent system context menu when right-clicking a Blockly context menu.
-  Blockly.bindEventWithChecks_(
-      menuDom, 'contextmenu', null, Blockly.utils.noEvent);
+  Blockly.bindEventWithChecks_(menuDom, 'contextmenu', null, Blockly.utils.noEvent);
   // Enable autofocus after the initial render to avoid issue #1329.
   menu.setAllowAutoFocus(true);
 };
@@ -222,8 +220,10 @@ Blockly.ContextMenu.blockDeleteOption = function(block) {
     descendantCount -= nextBlock.getDescendants(false).length;
   }
   var deleteOption = {
-    text: descendantCount == 1 ? Blockly.Msg['DELETE_BLOCK'] :
-        Blockly.Msg['DELETE_X_BLOCKS'].replace('%1', String(descendantCount)),
+    text:
+      descendantCount == 1
+        ? Blockly.Msg['DELETE_BLOCK']
+        : Blockly.Msg['DELETE_X_BLOCKS'].replace('%1', String(descendantCount)),
     enabled: true,
     callback: function() {
       Blockly.Events.setGroup(true);
@@ -241,8 +241,7 @@ Blockly.ContextMenu.blockDeleteOption = function(block) {
  * @package
  */
 Blockly.ContextMenu.blockHelpOption = function(block) {
-  var url = (typeof block.helpUrl == 'function') ?
-      block.helpUrl() : block.helpUrl;
+  var url = typeof block.helpUrl == 'function' ? block.helpUrl() : block.helpUrl;
   var helpOption = {
     enabled: !!url,
     text: Blockly.Msg['HELP'],
@@ -291,8 +290,8 @@ Blockly.ContextMenu.blockCommentOption = function(block) {
   } else {
     // If there's no comment, add an option to create a comment.
     commentOption.text = Blockly.Msg['ADD_COMMENT'];
-    commentOption.callback = function() {
-      block.setCommentText('');
+    commentOption.callback = function(text) {
+      block.setCommentText(text);
     };
   }
   return commentOption;
@@ -349,9 +348,11 @@ Blockly.ContextMenu.workspaceCommentOption = function(ws, e) {
   // location of the mouse event.
   var addWsComment = function() {
     var comment = new Blockly.WorkspaceCommentSvg(
-        ws, Blockly.Msg.WORKSPACE_COMMENT_DEFAULT_TEXT,
+        ws,
+        Blockly.Msg.WORKSPACE_COMMENT_DEFAULT_TEXT,
         Blockly.WorkspaceCommentSvg.DEFAULT_SIZE,
-        Blockly.WorkspaceCommentSvg.DEFAULT_SIZE);
+        Blockly.WorkspaceCommentSvg.DEFAULT_SIZE
+    );
 
     var injectionDiv = ws.getInjectionDiv();
     // Bounding rect coordinates are in client coordinates, meaning that they
@@ -361,7 +362,9 @@ Blockly.ContextMenu.workspaceCommentOption = function(ws, e) {
 
     // The client coordinates offset by the injection div's upper left corner.
     var clientOffsetPixels = new goog.math.Coordinate(
-        e.clientX - boundingRect.left, e.clientY - boundingRect.top);
+        e.clientX - boundingRect.left,
+        e.clientY - boundingRect.top
+    );
 
     // The offset in pixels between the main workspace's origin and the upper
     // left corner of the injection div.
@@ -369,8 +372,7 @@ Blockly.ContextMenu.workspaceCommentOption = function(ws, e) {
 
     // The position of the new comment in pixels relative to the origin of the
     // main workspace.
-    var finalOffsetPixels = goog.math.Coordinate.difference(clientOffsetPixels,
-        mainOffsetPixels);
+    var finalOffsetPixels = goog.math.Coordinate.difference(clientOffsetPixels, mainOffsetPixels);
 
     // The position of the new comment in main workspace coordinates.
     var finalOffsetMainWs = finalOffsetPixels.scale(1 / ws.scale);
