@@ -641,6 +641,10 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
   if (this.workspace.options.readOnly || !this.contextMenu) {
     return;
   }
+
+  var code = Blockly.Python.workspaceToCode(this.workspace);
+  console.log('Python 🐍 generated code', code);
+
   // Save the current block in a variable for use in closures.
   var block = this;
   var menuOptions = [];
