@@ -67,6 +67,8 @@ pipeline {
                             sh 'git add .'
                             sh "git commit -m 'Updated by ${env.BUILD_TAG}'"                        
                             sh "git push"
+                            
+                            sh("""curl -X POST -H 'Content-type: application/json' --data '{"text":"New blockly-js version available, please update your submodule!"}' https://hooks.slack.com/services/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""")
                         }
                     }
                 }
