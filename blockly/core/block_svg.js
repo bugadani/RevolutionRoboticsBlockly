@@ -642,8 +642,22 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
     return;
   }
 
-  var code = Blockly.Python.workspaceToCode(this.workspace);
-  console.log('Python 🐍 generated code', code);
+  console.group('Code Generation');
+  var pythonCode = Blockly.Python.workspaceToCode(this.workspace);
+  console.log('Python 🐍 generated code', pythonCode);
+
+  var xml = Blockly.Xml.workspaceToDom(this.workspace);
+  var xmlText = Blockly.Xml.domToText(xml);
+  console.log('XML generated', xmlText);
+
+  var allUsedVar = Blockly.Variables.allUsedVarModels(this.workspace);
+  console.log(
+      'All used var models name',
+      allUsedVar.map(function(variable) {
+        return variable.name;
+      })
+  );
+  console.groupEnd();
 
   // Save the current block in a variable for use in closures.
   var block = this;
