@@ -2,9 +2,23 @@ goog.require('Blockly.Blocks');
 goog.require('Blockly');
 
 var CUSTOM_IMAGES = {
-  ARROW:
-    'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMiIgdmlld0JveD0iMCAwIDE0IDEyIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPHBhdGggZD0iTS0yLTNoMTh2MThILTJ6Ii8+CiAgICAgICAgPGcgc3Ryb2tlPSIjRkZGIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMS41Ij4KICAgICAgICAgICAgPHBhdGggZD0iTTEzIDZIMU04LjUwMiAxMC41TDEzIDYgOC41MDIgMS41Ii8+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4K'
+  DIRECTION_RIGHT:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAeNJREFUaAXtmkFOwzAQRROE0jNwiq65BSfgGuxZVL0G3KHAEZA4A0vSE7BggcL/KJZSMw4RsRN7mJFGTsaJ7ffHjVs3VWVmCpgCpoApYAqYAqbAf1Kg67oGvoO38CN8D9+o1QBwhPXtEQGd0AB782n7c53QI8Dk1gcNKGlKE9aZLmhQNfCDowuU6qA3Bi2n2jJd/HqNxNr0lme3siXLMh1IM8IPFKf4z7IDmJhpg3aCFVv2mWYmx0xlpg1aSLmY6Xo4v3FTg/Nb+DX8YlhX6PErxr2t6/rdjd8H3qPixlUqKZ8BfOlYfOAWFRoy6/hYfgL43AV84M5VKCpPgM8UgYVQXoYV2jP846E1hK+ER/t36OSiDE4wKP58nL8WlwAcDZaJyx04KmzuwNFhcwZOApsrcA/72561+L2ZTKOGxkUbvSlhJQYzZTPvb7Act0iLYEKmYNMTYeftUecCvAhsLhleDDYH4EVh1wZeHHZNYMCu83cpOhaNYqQ0dLrOH+IiLYIpYdk2ugi948EhzVt6xgaPxlv24Bm3fZIa+gsBR4f1dzzuBTIpJlw2K3Qn3P2E2BX2oz6EujghKM2HB18KY6bpPObWbVJjH/AdnH0e4bpfTEuqpjVuCpgCpoApYAqYAtko8AVTOveurE9g/wAAAABJRU5ErkJggg==',
+  DIRECTION_FWD:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAdFJREFUaAXtmc1twzAMhZMekkP3bjJHd2i7QbtEzu0SAVw+wAKCgJYoiUqeABIg7NASzY/PPzG024VFB6IDrR1YluVV/Fv8uvoPYq35qOcJ2FH8In5viB2pi68tDkDiH/ekN78/MaY2L+V4gIjnYBP3/NAVsPNDN8DOC90BOx+0A2yC/kIuygdTKsoRlh96ACwvtBEWl+iW4ZWUM57LW6rEe9ZUcIbInCPdPk/Z1sCiwC3g9Rg3dC1sCZgaugXWAkwJ3QprBb6BLv3/Hv8g64GtAaaANsJmv3gkh2oA1EwGW760/JWWEx/ES6+eLCyAVFoJarApJocfDy0nPW0Vu8aLsK3A6zwL9Dk1qXsrUL8ZYBNsD7AR+q8bNCXIAJthe4EN0K7Ab4rCVbAewAXoE467mMDioQVoXNpw3NOH2uQyR7WGPM317GtP1jMetNr8vZgWHxF7GZGUOWcAM6vjUVso7NFF5hyhMLM6HrWFwh5dZM4RCjOr41FbKOzRReYcoTCzOh61hcIeXWTOEQozq+NRWyjs0UXmHKEwszoetYXCHl1kzhEKD1ZHW+HTYsPKeLTC7wqJFlOGTRiStTSs+p3F0yok9qtXISdEj5KjA6M68A8EfLZH1sRx5QAAAABJRU5ErkJggg==',
+  DIRECTION_LEFT:
+    'data:simage/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAeBJREFUaAXtmkFOwzAQRROQyoIbsOUSnIPTsGKJ6DHgDpQjsGDFJRquAEJK/6BO9GU5JMhO8JixNPLEjpN5f5y6Td00XlwBV8AVcAVcAVfAFbCsQN/3G9gdbA/rYPewjWWm0dgBdgZ7goVlOzrIagcIx2AF/t0qVzTuCdi6gGfACnAdU3om7LOcF50alhodFgoExTNraQZ/x4oM/rT0aII9s1Yzu9MUjtRVZdZhKcueWX9mS1YAU1WWHn9m6ZkVMUx+N255pgHiHMdvsEtuN+p3iPsRdtu27acyhMAv6LjSzkrqLYBvlCUE/kLHqXZWUncAvlCW/wDcAHjgPFHyY/0aHFd3OJALWWUfWkOyOMNDozqy3MCm1uAilyXEHS3KNlpjlEnoKC0aR0G5wyJ0ErDAz4Qu5pdSMrA16CzAlqCzAVuBzgpsATo7cOnQiwATdOw/YL7n6p/efHP2JebkggsW90KeIdlPhtULlAbNkOxrvFnqkqAZkv0soHyRmdCL/yHOkOxzrNn8GdCL7/FgSPazQYYXmoBeA1i2SYVlz3GGbzy479c+fmh/YNA1bBcZ/BBpy90kbynDEmsLz0k7hsR/sjHteF/ZBCeZFqt3Q1xainy0K+AKuAKugCvgCqyhwAG/yvXGudncwgAAAABJRU5ErkJggg==',
+  DIRECTION_BACK:
+    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAAAXNSR0IArs4c6QAAAeJJREFUaAXtmd1uwyAMhdtdpBd777UvtO0NtpfYdfsSk7JjCaQ0AoPBCc5kJERC8MGfT3/F6eTNK+AVaK3APM8T+g39HjpdT6165uMCLIandjOfeGuCwCRn1+3eqtcSd24Jao0h0lTsGS01v8XcyxailjUd2LI7Grm5wxpVtKzhDlt2RyM3d1ijipY13GHL7mjk5g5rVNGyhjts2R2N3NxhjSpa1nCHLbujkZs7rFFFyxrusGV3NHJzhzWqaFnDHU65gxMSOvV7Q4+nfleaS63dY27zfAIshqf2gbuLBPApenEj1Lgg9H0RHi+vEh12LRRTp360kQg6ZrYe2c0XDxGXgyXJx2Jp3yXEcsC0UTU0LU61muwQx8GSrCowvWe5VgWdEygBI64ES9J6B+sQm9AJimtF6FwwB4yYGthPWsfpiJ+FjbugpcDDYGN1eqElwMNhhdDJl1gtsBnYXugaYHOwPdAlYLOwrdAccIAtfSgm3yoxn11GSaI5YInGLlClTQQJ55jtO7suQiV0DpibH/8yXsPG+wCd+ifDAXHP7MJuAF38qRr3HD4qOH0c2FjtDujjwXZAHxe2Afr4sALo/wO7gv5JfAfRnO6f97jp6BFgr+hf6L+hf9Pc6Lx8f6/AgSvwB0P1yfltdbYsAAAAAElFTkSuQmCC'
 };
+
+function getDirectionLabelText(directionID) {
+  if (directionID === 'Motor.DIRECTION_RIGHT' || directionID === 'Motor.DIRECTION_LEFT') {
+    return 'turn';
+  }
+
+  return 'drive';
+}
 
 // Terminate program
 Blockly.Blocks['block_terminate_program'] = {
@@ -126,9 +140,12 @@ Blockly.Blocks['block_repeat_until'] = {
 Blockly.Blocks['block_drive'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField('drive ')
-        .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.ARROW, 15, 15, '*'))
-        .appendField('direction ')
+        .appendField('drive', 'DIRECTION_LABEL')
+        .appendField(
+            new Blockly.FieldImage(CUSTOM_IMAGES.DIRECTION_FWD, 15, 15, '*'),
+            'DIRECTION_IMAGE'
+        )
+        .appendField('direction')
         .appendField(
             new Blockly.FieldDropdown([
               ['forward', 'Motor.DIRECTION_FWD'],
@@ -157,6 +174,18 @@ Blockly.Blocks['block_drive'] = {
     this.setColour('#e60312');
     this.setTooltip('');
     this.setHelpUrl('');
+  },
+  onchange: function(event) {
+    if (event instanceof Blockly.Events.Change) {
+      if (event.name === 'DIRECTION') {
+        var driveBlock = this.workspace.getBlockById(event.blockId);
+        var imageField = driveBlock.getField('DIRECTION_IMAGE');
+        imageField.setValue(CUSTOM_IMAGES[event.newValue.replace('Motor.', '')]);
+
+        var labelField = driveBlock.getField('DIRECTION_LABEL');
+        labelField.setText(getDirectionLabelText(event.newValue));
+      }
+    }
   }
 };
 
@@ -175,7 +204,14 @@ Blockly.Blocks['block_motor'] = {
             ]),
             'DIRECTION'
         );
-    this.appendValueInput('ROTATION').setCheck('Number');
+
+    // TODO: Extract to function
+    var numberShadowBlock = this.workspace.newBlock('math_number');
+    numberShadowBlock.setShadow(true);
+    var ob = numberShadowBlock.outputConnection;
+
+    var cc = this.appendValueInput('ROTATION').setCheck('Number').connection;
+    cc.connect(ob);
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
           ['deg', 'Motor.UNIT_DEG'],
