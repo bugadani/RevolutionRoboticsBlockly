@@ -61,7 +61,7 @@ goog.addDependency("../../../" + dir + "/core/field_angle.js", ['Blockly.FieldAn
 goog.addDependency("../../../" + dir + "/core/field_checkbox.js", ['Blockly.FieldCheckbox'], ['Blockly.Field', 'Blockly.utils']);
 goog.addDependency("../../../" + dir + "/core/field_colour.js", ['Blockly.FieldColour'], ['Blockly.DropDownDiv', 'Blockly.Field', 'Blockly.utils', 'goog.style']);
 goog.addDependency("../../../" + dir + "/core/field_date.js", ['Blockly.FieldDate'], ['Blockly.Field', 'Blockly.utils', 'goog.date', 'goog.date.DateTime', 'goog.events', 'goog.i18n.DateTimeSymbols', 'goog.i18n.DateTimeSymbols_he', 'goog.style', 'goog.ui.DatePicker']);
-goog.addDependency("../../../" + dir + "/core/field_dropdown.js", ['Blockly.FieldDropdown'], ['Blockly.Field', 'Blockly.utils', 'Blockly.utils.uiMenu', 'goog.events', 'goog.ui.Menu', 'goog.ui.MenuItem', 'goog.userAgent']);
+goog.addDependency("../../../" + dir + "/core/field_dropdown.js", ['Blockly.FieldDropdown'], ['Blockly.Field', 'Blockly.NativeBridge', 'Blockly.utils', 'Blockly.utils.uiMenu', 'goog.events', 'goog.ui.Menu', 'goog.ui.MenuItem', 'goog.userAgent']);
 goog.addDependency("../../../" + dir + "/core/field_image.js", ['Blockly.FieldImage'], ['Blockly.Field', 'Blockly.utils', 'goog.math.Size']);
 goog.addDependency("../../../" + dir + "/core/field_label.js", ['Blockly.FieldLabel'], ['Blockly.Field', 'Blockly.Tooltip', 'Blockly.utils', 'goog.math.Size']);
 goog.addDependency("../../../" + dir + "/core/field_number.js", ['Blockly.FieldNumber'], ['Blockly.FieldTextInput']);
@@ -82,6 +82,7 @@ goog.addDependency("../../../" + dir + "/core/insertion_marker_manager.js", ['Bl
 goog.addDependency("../../../" + dir + "/core/msg.js", ['Blockly.Msg'], []);
 goog.addDependency("../../../" + dir + "/core/mutator.js", ['Blockly.Mutator'], ['Blockly.Bubble', 'Blockly.Events.BlockChange', 'Blockly.Events.Ui', 'Blockly.Icon', 'Blockly.utils', 'Blockly.WorkspaceSvg', 'Blockly.Xml', 'Blockly.Xml.utils']);
 goog.addDependency("../../../" + dir + "/core/names.js", ['Blockly.Names'], []);
+goog.addDependency("../../../" + dir + "/core/native_bridge.js", ['Blockly.NativeBridge'], []);
 goog.addDependency("../../../" + dir + "/core/options.js", ['Blockly.Options'], ['Blockly.Xml', 'Blockly.Themes.Classic']);
 goog.addDependency("../../../" + dir + "/core/procedures.js", ['Blockly.Procedures'], ['Blockly.Blocks', 'Blockly.constants', 'Blockly.Events.BlockChange', 'Blockly.Field', 'Blockly.Names', 'Blockly.Workspace', 'Blockly.Xml', 'Blockly.Xml.utils']);
 goog.addDependency("../../../" + dir + "/core/rendered_connection.js", ['Blockly.RenderedConnection'], ['Blockly.Connection', 'Blockly.utils', 'goog.math.Coordinate']);
@@ -1806,6 +1807,7 @@ goog.require('Blockly.InsertionMarkerManager');
 goog.require('Blockly.Msg');
 goog.require('Blockly.Mutator');
 goog.require('Blockly.Names');
+goog.require('Blockly.NativeBridge');
 goog.require('Blockly.Options');
 goog.require('Blockly.Procedures');
 goog.require('Blockly.RenderedConnection');

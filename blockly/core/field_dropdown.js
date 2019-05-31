@@ -29,6 +29,7 @@
 goog.provide('Blockly.FieldDropdown');
 
 goog.require('Blockly.Field');
+goog.require('Blockly.NativeBridge');
 goog.require('Blockly.utils');
 goog.require('Blockly.utils.uiMenu');
 
@@ -142,22 +143,18 @@ Blockly.FieldDropdown.prototype.init = function() {
  * @private
  */
 Blockly.FieldDropdown.prototype.showEditor_ = function() {
-  Blockly.prompt(
-      'Dropdown selector',
-      JSON.stringify(this.menuGenerator_),
-      this.setCallback_.bind(this)
+  console.log('sourceBlock_', this.sourceBlock_.type);
+  console.log('name', this.name);
+  Blockly.NativeBridge.sendMessage(
+      Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
+      'Select value',
+      this.value_,
+      this.getOptions(),
+      this.updateValueCallback.bind(this)
   );
-  // Blockly.WidgetDiv.show(this, this.sourceBlock_.RTL, null);
-  // var menu = this.createMenu_();
-  // this.addActionListener_(menu);
-
-  // var event = new Blockly.Events.Ui(null, 'selected', null, null);
-  // event.workspaceId = this.sourceBlock_.workspace.id;
-  // event.targetField = this;
-  // Blockly.Events.fire(event);
 };
 
-Blockly.FieldDropdown.prototype.setCallback_ = function(newValue) {
+Blockly.FieldDropdown.prototype.updateValueCallback = function(newValue) {
   if (this.sourceBlock_) {
     // Call any validation function, and allow it to override.
     newValue = this.callValidator(newValue);
