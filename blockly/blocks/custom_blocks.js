@@ -20,6 +20,14 @@ function getDirectionLabelText(directionID) {
   return 'drive';
 }
 
+function createShadowElement(workspace, blockType, input) {
+  var numberShadowBlock = workspace.newBlock(blockType);
+  numberShadowBlock.setShadow(true);
+  var outputConnection = numberShadowBlock.outputConnection;
+  var inputConnection = input.connection;
+  inputConnection.connect(outputConnection);
+}
+
 // Terminate program
 Blockly.Blocks['block_terminate_program'] = {
   init: function() {
@@ -154,20 +162,26 @@ Blockly.Blocks['block_drive'] = {
               ['backward', 'Motor.DIRECTION_BACK']
             ]),
             'DIRECTION'
-        )
-        .appendField(new Blockly.FieldNumber(0), 'ROTATION')
-        .appendField(
-            new Blockly.FieldDropdown([['rotation', 'Motor.UNIT_ROT'], ['sec', 'Motor.UNIT_SEC']]),
-            'UNIT_ROTATION'
-        )
-        .appendField(new Blockly.FieldNumber(0), 'SPEED')
-        .appendField(
-            new Blockly.FieldDropdown([
-              ['rpm', 'Motor.UNIT_SPEED_RPM'],
-              ['power', 'Motor.UNIT_SPEED_PWR']
-            ]),
-            'UNIT_SPEED'
         );
+
+    var rotationValueInput = this.appendValueInput('ROTATION').setCheck('Number');
+    createShadowElement(this.workspace, 'math_number', rotationValueInput);
+
+    this.appendDummyInput().appendField(
+        new Blockly.FieldDropdown([['rotation', 'Motor.UNIT_ROT'], ['sec', 'Motor.UNIT_SEC']]),
+        'UNIT_ROTATION'
+    );
+
+    var speedValueInput = this.appendValueInput('SPEED').setCheck('Number');
+    createShadowElement(this.workspace, 'math_number', speedValueInput);
+
+    this.appendDummyInput().appendField(
+        new Blockly.FieldDropdown([
+          ['rpm', 'Motor.UNIT_SPEED_RPM'],
+          ['power', 'Motor.UNIT_SPEED_PWR']
+        ]),
+        'UNIT_SPEED'
+    );
 
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -205,13 +219,8 @@ Blockly.Blocks['block_motor'] = {
             'DIRECTION'
         );
 
-    // TODO: Extract to function
-    var numberShadowBlock = this.workspace.newBlock('math_number');
-    numberShadowBlock.setShadow(true);
-    var ob = numberShadowBlock.outputConnection;
-
-    var cc = this.appendValueInput('ROTATION').setCheck('Number').connection;
-    cc.connect(ob);
+    var rotationValueInput = this.appendValueInput('ROTATION').setCheck('Number');
+    createShadowElement(this.workspace, 'math_number', rotationValueInput);
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
           ['deg', 'Motor.UNIT_DEG'],
