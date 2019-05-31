@@ -669,6 +669,9 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
   var blockCommentOption = Blockly.ContextMenu.blockCommentOption(block);
   menuOptions.push(blockCommentOption);
 
+  var blockHelpOption = Blockly.ContextMenu.blockHelpOption(block);
+  menuOptions.push(blockHelpOption);
+
   Blockly.prompt('Show context menu', JSON.stringify(menuOptions), function(actionString) {
     var action = JSON.parse(actionString);
 

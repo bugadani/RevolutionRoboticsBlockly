@@ -143,11 +143,8 @@ Blockly.FieldDropdown.prototype.init = function() {
  * @private
  */
 Blockly.FieldDropdown.prototype.showEditor_ = function() {
-  console.log('sourceBlock_', this.sourceBlock_.type);
-  console.log('name', this.name);
   Blockly.NativeBridge.sendMessage(
       Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
-      'Select value',
       this.value_,
       this.getOptions(),
       this.updateValueCallback.bind(this)

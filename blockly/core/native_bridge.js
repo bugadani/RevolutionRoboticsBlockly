@@ -8,15 +8,21 @@ function map2DArrayToKeyValueArray(array) {
   });
 }
 
-function constructMessage(title, defaultOption, options) {
+function mapPromptTypeToTitle(promptType) {
+  // TODO: Map prompt types to titles
+  return `Title of ${promptType}`;
+}
+
+function constructMessage(type, defaultOption, options) {
   return {
-    title: title,
+    title: mapPromptTypeToTitle(type),
     defaultOption: defaultOption,
     options: map2DArrayToKeyValueArray(options)
   };
 }
 
-Blockly.NativeBridge.PROMPT_TYPE = {
+// TODO: Create relevant constants
+var PROMPT_TYPE = {
   DRIVE_DIRECTION_SELECTOR: 'DRIVE_DIRECTION_SELECTOR',
   DRIVE_ROTATION_SELECTOR: 'DRIVE_ROTATION_SELECTOR',
   DRIVE_ROTATION_METRIC_SELECTOR: 'DRIVE_ROTATION_METRIC_SELECTOR',
@@ -40,12 +46,19 @@ Blockly.NativeBridge.PROMPT_TYPE = {
   TEXT_INPUT: 'TEXT_INPUT'
 };
 
-Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
-  return sourceBlockType + '.' + fieldName;
+var ACTION_TYPE = {
+  SELECT_OPTION: 'SELECT_OPTION',
+  MULTI_SELECT_OPTION: 'MULTI_SELECT_OPTION',
+  SET_INPUT: 'SET_INPUT',
+  SET_SLIDER: 'SET_SLIDER'
 };
 
-Blockly.NativeBridge.sendMessage = function(type, title, defaultOption, options, callback) {
-  Blockly.prompt(type, JSON.stringify(constructMessage(title, defaultOption, options)), callback);
+Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
+  return `${sourceBlockType}.${fieldName}`;
+};
+
+Blockly.NativeBridge.sendMessage = function(type, defaultOption, options, callback) {
+  Blockly.prompt(type, JSON.stringify(constructMessage(type, defaultOption, options)), callback);
 };
 
 Blockly.NativeBridge.receiveMessage = function(message) {};
