@@ -355,10 +355,12 @@ Blockly.Css.CONTENT = [
     'display: none;',
   '}',
 
+  '@font-face { font-family: Jura; src: url(\'./media/Jura-Medium.ttf\'); } ',
+
   '.blocklyText {',
     'cursor: default;',
     'fill: #fff;',
-    'font-family: sans-serif;',
+    'font-family: Jura;',
     'font-size: 11pt;',
   '}',
 
@@ -391,7 +393,7 @@ Blockly.Css.CONTENT = [
     'z-index: 20;',
   '}',
   '.blocklyFlyoutButton {',
-    'fill: #888;',
+    'fill: #cc7be6;',
     'cursor: default;',
   '}',
 
@@ -553,8 +555,8 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.blocklyFlyoutBackground {',
-    'fill: #eb1d1d1d;',
-    'fill-opacity: .8;',
+    'fill: #000000;',
+    'fill-opacity: .9;',
   '}',
 
   '.blocklyTransparentBackground {',
@@ -724,9 +726,9 @@ Blockly.Css.CONTENT = [
     'margin-left: 8px;',
   '}',
 
-  '.blocklyTreeRow:not(.blocklyTreeSelected):hover {',
-    'background-color: #fff;',
-  '}',
+ // '.blocklyTreeRow:not(.blocklyTreeSelected):hover {',
+ //   'background-color: #fff;',
+ // '}',
 
   '.blocklyTreeSeparator {',
     'border-bottom: solid #e5e5e5 1px;',
@@ -822,6 +824,14 @@ Blockly.Css.CONTENT = [
 
   '.timeIcon:before {',
   'background-image: url("./media/time.svg");',   
+  '}',
+
+  '.variablesIcon:before {',
+  'background-image: url("./media/variables.svg");',   
+  '}',
+
+  '.functionsIcon:before {',
+  'background-image: url("./media/functions.svg");',   
   '}',
 
   /* End of Icons */

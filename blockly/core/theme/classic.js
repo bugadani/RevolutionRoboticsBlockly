@@ -40,22 +40,22 @@ var defaultBlockStyles = {
     "colourPrimary": "#0264ff"
   },
   "loop_blocks": {
-    "colourPrimary": "120"
+    "colourPrimary": "#dd7d3a"
   },
   "math_blocks": {
     "colourPrimary": "#4dc88f"
   },
   "procedure_blocks": {
-    "colourPrimary": "290"
+    "colourPrimary": "#6ab3c1"
   },
   "text_blocks": {
     "colourPrimary": "160"
   },
   "variable_blocks": {
-    "colourPrimary": "330"
+    "colourPrimary": "#cc7be6"
   },
   "variable_dynamic_blocks":{
-    "colourPrimary": "310"
+    "colourPrimary": "#cc7be6"
   },
   "hat_blocks":{
     "colourPrimary":"330",
@@ -71,22 +71,22 @@ var categoryStyles = {
     "colour": "260"
   },
   "logic_category": {
-    "colour": "210"
+    "colour": "#0264ff"
   },
   "loop_category": {
-    "colour": "120"
+    "colour": "#dd7d3a"
   },
   "math_category": {
     "colour": "230"
   },
   "procedure_category": {
-    "colour": "290"
+    "colour": "#6ab3c1"
   },
   "text_category": {
     "colour": "160"
   },
   "variable_category": {
-    "colour": "330"
+    "colour": "#cc7be6"
   },
   "variable_dynamic_category":{
     "colour": "310"
