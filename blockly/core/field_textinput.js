@@ -175,9 +175,9 @@ Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
   var fieldText = this;
 
   Blockly.NativeBridge.input(
-      Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
+      Blockly.NativeBridge.createPromptType(fieldText.sourceBlock_.type, fieldText.name),
       Blockly.Msg['CHANGE_VALUE_TITLE'],
-      this.text_,
+      fieldText.text_,
       function(newValue) {
         if (fieldText.sourceBlock_) {
           newValue = fieldText.callValidator(newValue);

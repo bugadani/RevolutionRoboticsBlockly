@@ -4,7 +4,9 @@ goog.provide('Blockly.NativeBridge');
 
 function map2DArrayToKeyValueArray(array) {
   return array.map(function(element) {
-    return { key: element[1], value: element[0] };
+    if (Array.isArray(element)) return { key: element[1], value: element[0] };
+
+    return { key: element, value: element };
   });
 }
 
@@ -25,10 +27,10 @@ Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
   return `${sourceBlockType}.${fieldName}`;
 };
 
-Blockly.NativeBridge.optionSelector = function(type, defaultOption, options, callback) {
+Blockly.NativeBridge.optionSelector = function(type, defaultKey, options, callback) {
   var optionSelectorObject = {
     title: mapOptionSelectorTypeToTitle(type),
-    defaultOption: defaultOption,
+    defaultKey: defaultKey,
     options: map2DArrayToKeyValueArray(options)
   };
 

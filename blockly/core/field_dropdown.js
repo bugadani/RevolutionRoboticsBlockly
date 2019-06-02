@@ -146,9 +146,9 @@ Blockly.FieldDropdown.prototype.showEditor_ = function() {
   var fieldDropdown = this;
 
   Blockly.NativeBridge.optionSelector(
-      Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
-      this.value_,
-      this.getOptions(),
+      Blockly.NativeBridge.createPromptType(fieldDropdown.sourceBlock_.type, fieldDropdown.name),
+      fieldDropdown.value_,
+      fieldDropdown.getOptions(),
       function(newValue) {
         if (fieldDropdown.sourceBlock_) {
         // Call any validation function, and allow it to override.
@@ -534,7 +534,7 @@ Blockly.FieldDropdown.prototype.renderSelectedText_ = function() {
 Blockly.FieldDropdown.prototype.updateWidth = function() {
   if (this.imageJson_ && (goog.userAgent.IE || goog.userAgent.EDGE)) {
     // Recalculate the full width.
-    var arrowWidth =  2; //Blockly.Field.getCachedWidth(this.arrow_);
+    var arrowWidth = 2; //Blockly.Field.getCachedWidth(this.arrow_);
     var width = Number(this.imageJson_.width) + arrowWidth + Blockly.BlockSvg.SEP_SPACE_X;
     if (this.borderRect_) {
       this.borderRect_.setAttribute('width', width);
