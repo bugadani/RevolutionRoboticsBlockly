@@ -32,6 +32,7 @@ goog.require('Blockly.ContextMenu');
 goog.require('Blockly.Events.Ui');
 goog.require('Blockly.Events.BlockMove');
 goog.require('Blockly.Grid');
+goog.require('Blockly.NativeBridge');
 goog.require('Blockly.RenderedConnection');
 goog.require('Blockly.Tooltip');
 goog.require('Blockly.Touch');
@@ -642,48 +643,37 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
     return;
   }
 
-  console.group('Code Generation');
-  var pythonCode = Blockly.Python.workspaceToCode(this.workspace);
-  console.log('Python 🐍 generated code', pythonCode);
-
-  var xml = Blockly.Xml.workspaceToDom(this.workspace);
-  var xmlText = Blockly.Xml.domToText(xml);
-  console.log('XML generated', xmlText);
-
-  var allUsedVar = Blockly.Variables.allUsedVarModels(this.workspace);
-  console.log(
-      'All used var models name',
-      allUsedVar.map(function(variable) {
-        return variable.name;
-      })
-  );
-  console.groupEnd();
-
   // Save the current block in a variable for use in closures.
   var block = this;
-  var menuOptions = [];
 
-  var blockDeleteOption = Blockly.ContextMenu.blockDeleteOption(block);
-  menuOptions.push(blockDeleteOption);
+  Blockly.NativeBridge.blockContext('TODO: Title for context', block.getCommentText(), function(
+      actionString
+  ) {
+    if (actionString) {
+      var ACTION_TYPE = Blockly.NativeBridge.CONTEXT_ACTION_TYPE;
+      var action = JSON.parse(actionString);
 
-  var blockCommentOption = Blockly.ContextMenu.blockCommentOption(block);
-  menuOptions.push(blockCommentOption);
+      switch (action.type) {
+        case ACTION_TYPE.ADD_COMMENT:
+          block.setCommentText(action.payload);
+          break;
 
-  var blockHelpOption = Blockly.ContextMenu.blockHelpOption(block);
-  menuOptions.push(blockHelpOption);
+        case ACTION_TYPE.REMOVE_COMMENT:
+          block.setCommentText(null);
+          break;
 
-  var blockDuplicateOption = Blockly.ContextMenu.blockDuplicateOption(block);
-  menuOptions.push(blockDuplicateOption);
+        case ACTION_TYPE.DELETE_BLOCK:
+          Blockly.ContextMenu.blockDeleteOption(block).callback();
+          break;
 
-  Blockly.prompt('Show context menu', JSON.stringify(menuOptions), function(actionString) {
-    var action = JSON.parse(actionString);
+        case ACTION_TYPE.DUPLICATE_BLOCK:
+          Blockly.duplicate_(block);
+          break;
 
-    if (action.type === 'ADD_COMMENT' || action.type === 'DELETE_COMMENT') {
-      blockCommentOption.callback(action.payload);
-    }
-
-    if (action.type === 'DELETE_BLOCK') {
-      blockDeleteOption.callback();
+        case ACTION_TYPE.HELP:
+          block.showHelp_();
+          break;
+      }
     }
   });
 

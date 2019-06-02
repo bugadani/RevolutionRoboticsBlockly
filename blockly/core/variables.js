@@ -396,24 +396,18 @@ Blockly.Variables.renameVariable = function(workspace, variable, opt_callback) {
  *     variable name, or null if the user picked something illegal.
  */
 Blockly.Variables.promptName = function(promptText, defaultText, callback) {
-  console.log('Variables this', this);
-  Blockly.NativeBridge.textInput(
-      Blockly.NativeBridge.createPromptType('valami', 'variable'),
-      promptText,
-      defaultText,
-      function(newVar) {
-      // Merge runs of whitespace.  Strip leading and trailing whitespace.
-      // Beyond this, all names are legal.
-        if (newVar) {
-          newVar = newVar.replace(/[\s\xa0]+/g, ' ').replace(/^ | $/g, '');
-          if (newVar == Blockly.Msg['RENAME_VARIABLE'] || newVar == Blockly.Msg['NEW_VARIABLE']) {
-          // Ok, not ALL names are legal...
-            newVar = null;
-          }
-        }
-        callback(newVar);
+  Blockly.NativeBridge.input('VARIABLE', promptText, defaultText, function(newVar) {
+    // Merge runs of whitespace.  Strip leading and trailing whitespace.
+    // Beyond this, all names are legal.
+    if (newVar) {
+      newVar = newVar.replace(/[\s\xa0]+/g, ' ').replace(/^ | $/g, '');
+      if (newVar == Blockly.Msg['RENAME_VARIABLE'] || newVar == Blockly.Msg['NEW_VARIABLE']) {
+        // Ok, not ALL names are legal...
+        newVar = null;
       }
-  );
+    }
+    callback(newVar);
+  });
 };
 
 /**
