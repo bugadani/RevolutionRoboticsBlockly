@@ -65,7 +65,7 @@ goog.addDependency("../../../" + dir + "/core/field_dropdown.js", ['Blockly.Fiel
 goog.addDependency("../../../" + dir + "/core/field_image.js", ['Blockly.FieldImage'], ['Blockly.Field', 'Blockly.utils', 'goog.math.Size']);
 goog.addDependency("../../../" + dir + "/core/field_label.js", ['Blockly.FieldLabel'], ['Blockly.Field', 'Blockly.Tooltip', 'Blockly.utils', 'goog.math.Size']);
 goog.addDependency("../../../" + dir + "/core/field_number.js", ['Blockly.FieldNumber'], ['Blockly.FieldTextInput']);
-goog.addDependency("../../../" + dir + "/core/field_textinput.js", ['Blockly.FieldTextInput'], ['Blockly.DropDownDiv', 'Blockly.Field', 'Blockly.Msg', 'Blockly.utils', 'goog.math.Coordinate', 'goog.userAgent']);
+goog.addDependency("../../../" + dir + "/core/field_textinput.js", ['Blockly.FieldTextInput'], ['Blockly.DropDownDiv', 'Blockly.Field', 'Blockly.Msg', 'Blockly.NativeBridge', 'Blockly.utils', 'goog.math.Coordinate', 'goog.userAgent']);
 goog.addDependency("../../../" + dir + "/core/field_variable.js", ['Blockly.FieldVariable'], ['Blockly.FieldDropdown', 'Blockly.Msg', 'Blockly.utils', 'Blockly.VariableModel', 'Blockly.Variables', 'goog.math.Size']);
 goog.addDependency("../../../" + dir + "/core/flyout_base.js", ['Blockly.Flyout'], ['Blockly.Block', 'Blockly.Events', 'Blockly.Events.BlockCreate', 'Blockly.Events.VarCreate', 'Blockly.FlyoutButton', 'Blockly.Gesture', 'Blockly.Touch', 'Blockly.utils', 'Blockly.WorkspaceSvg', 'Blockly.Xml', 'goog.math.Rect']);
 goog.addDependency("../../../" + dir + "/core/flyout_button.js", ['Blockly.FlyoutButton'], ['Blockly.utils', 'goog.math.Coordinate']);
@@ -102,7 +102,7 @@ goog.addDependency("../../../" + dir + "/core/utils.js", ['Blockly.utils'], ['go
 goog.addDependency("../../../" + dir + "/core/variable_events.js", ['Blockly.Events.VarBase', 'Blockly.Events.VarCreate', 'Blockly.Events.VarDelete', 'Blockly.Events.VarRename'], ['Blockly.Events', 'Blockly.Events.Abstract']);
 goog.addDependency("../../../" + dir + "/core/variable_map.js", ['Blockly.VariableMap'], ['Blockly.Events.VarDelete', 'Blockly.Events.VarRename', 'Blockly.utils']);
 goog.addDependency("../../../" + dir + "/core/variable_model.js", ['Blockly.VariableModel'], ['Blockly.Events.VarCreate', 'Blockly.utils']);
-goog.addDependency("../../../" + dir + "/core/variables.js", ['Blockly.Variables'], ['Blockly.Blocks', 'Blockly.constants', 'Blockly.VariableModel', 'Blockly.Workspace', 'Blockly.Xml', 'goog.string']);
+goog.addDependency("../../../" + dir + "/core/variables.js", ['Blockly.Variables'], ['Blockly.Blocks', 'Blockly.constants', 'Blockly.NativeBridge', 'Blockly.VariableModel', 'Blockly.Workspace', 'Blockly.Xml', 'goog.string']);
 goog.addDependency("../../../" + dir + "/core/variables_dynamic.js", ['Blockly.VariablesDynamic'], ['Blockly.Variables', 'Blockly.Blocks', 'Blockly.constants', 'Blockly.VariableModel', 'Blockly.Xml']);
 goog.addDependency("../../../" + dir + "/core/warning.js", ['Blockly.Warning'], ['Blockly.Bubble', 'Blockly.Events.Ui', 'Blockly.Icon', 'Blockly.utils']);
 goog.addDependency("../../../" + dir + "/core/widgetdiv.js", ['Blockly.WidgetDiv'], ['Blockly.Css', 'goog.style']);

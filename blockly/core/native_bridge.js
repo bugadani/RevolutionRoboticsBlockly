@@ -8,17 +8,9 @@ function map2DArrayToKeyValueArray(array) {
   });
 }
 
-function mapPromptTypeToTitle(promptType) {
+function mapOptionSelectorTypeToTitle(promptType) {
   // TODO: Map prompt types to titles
   return `Title of ${promptType}`;
-}
-
-function constructMessage(type, defaultOption, options) {
-  return {
-    title: mapPromptTypeToTitle(type),
-    defaultOption: defaultOption,
-    options: map2DArrayToKeyValueArray(options)
-  };
 }
 
 // TODO: Create relevant constants
@@ -57,8 +49,23 @@ Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
   return `${sourceBlockType}.${fieldName}`;
 };
 
-Blockly.NativeBridge.sendMessage = function(type, defaultOption, options, callback) {
-  Blockly.prompt(type, JSON.stringify(constructMessage(type, defaultOption, options)), callback);
+Blockly.NativeBridge.optionSelector = function(type, defaultOption, options, callback) {
+  var optionSelectorObject = {
+    title: mapOptionSelectorTypeToTitle(type),
+    defaultOption: defaultOption,
+    options: map2DArrayToKeyValueArray(options)
+  };
+
+  Blockly.prompt(type, JSON.stringify(optionSelectorObject), callback);
+};
+
+Blockly.NativeBridge.input = function(type, title, defaultInput, callback) {
+  var textInputObject = {
+    title: title,
+    defaultInput: defaultInput
+  };
+
+  Blockly.prompt(type, JSON.stringify(textInputObject), callback);
 };
 
 Blockly.NativeBridge.receiveMessage = function(message) {};

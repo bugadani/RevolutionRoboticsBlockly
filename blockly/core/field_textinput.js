@@ -29,6 +29,7 @@ goog.provide('Blockly.FieldTextInput');
 goog.require('Blockly.DropDownDiv');
 goog.require('Blockly.Field');
 goog.require('Blockly.Msg');
+goog.require('Blockly.NativeBridge');
 goog.require('Blockly.utils');
 
 goog.require('goog.math.Coordinate');
@@ -172,12 +173,18 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
  */
 Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
   var fieldText = this;
-  Blockly.prompt(Blockly.Msg['CHANGE_VALUE_TITLE'], this.text_, function(newValue) {
-    if (fieldText.sourceBlock_) {
-      newValue = fieldText.callValidator(newValue);
-    }
-    fieldText.setValue(newValue);
-  });
+
+  Blockly.NativeBridge.input(
+      Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
+      Blockly.Msg['CHANGE_VALUE_TITLE'],
+      this.text_,
+      function(newValue) {
+        if (fieldText.sourceBlock_) {
+          newValue = fieldText.callValidator(newValue);
+        }
+        fieldText.setValue(newValue);
+      }
+  );
 };
 
 /**

@@ -143,22 +143,22 @@ Blockly.FieldDropdown.prototype.init = function() {
  * @private
  */
 Blockly.FieldDropdown.prototype.showEditor_ = function() {
-  Blockly.NativeBridge.sendMessage(
+  var fieldDropdown = this;
+
+  Blockly.NativeBridge.optionSelector(
       Blockly.NativeBridge.createPromptType(this.sourceBlock_.type, this.name),
       this.value_,
       this.getOptions(),
-      this.updateValueCallback.bind(this)
+      function(newValue) {
+        if (fieldDropdown.sourceBlock_) {
+        // Call any validation function, and allow it to override.
+          newValue = fieldDropdown.callValidator(newValue);
+        }
+        if (newValue !== null) {
+          fieldDropdown.setValue(newValue);
+        }
+      }
   );
-};
-
-Blockly.FieldDropdown.prototype.updateValueCallback = function(newValue) {
-  if (this.sourceBlock_) {
-    // Call any validation function, and allow it to override.
-    newValue = this.callValidator(newValue);
-  }
-  if (newValue !== null) {
-    this.setValue(newValue);
-  }
 };
 
 /**

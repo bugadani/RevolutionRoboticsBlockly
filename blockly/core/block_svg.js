@@ -672,6 +672,9 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
   var blockHelpOption = Blockly.ContextMenu.blockHelpOption(block);
   menuOptions.push(blockHelpOption);
 
+  var blockDuplicateOption = Blockly.ContextMenu.blockDuplicateOption(block);
+  menuOptions.push(blockDuplicateOption);
+
   Blockly.prompt('Show context menu', JSON.stringify(menuOptions), function(actionString) {
     var action = JSON.parse(actionString);
 
