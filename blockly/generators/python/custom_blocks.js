@@ -24,7 +24,7 @@ Blockly.Python['block_wait'] = function(block) {
 // Generator block_global_timer
 Blockly.Python['block_global_timer'] = function(block) {
   var code = 'Control.get_global_timer()\n';
-  return code;
+  return [code, Blockly.Python.ORDER_NONE];
 };
 
 // Generator block_repeat_forever
@@ -191,7 +191,7 @@ Blockly.Python['block_play_note'] = function(block) {
 Blockly.Python['play_tune'] = function(block) {
   var dropdown_tune = block.getFieldValue('IN_SOUND');
 
-  var code = "robot.play_tune('" + dropdown_tune + "')";
+  var code = "robot.play_tune('" + dropdown_tune + "')\n";
   return code;
 };
 
@@ -207,6 +207,15 @@ Blockly.Python['block_set_led'] = function(block) {
   var value_color = Blockly.Python.valueToCode(block, 'COLOR', Blockly.Python.ORDER_ATOMIC);
 
   var code = 'Light.set(' + 'led_index=' + value_led + ', ' + 'color=' + value_color + ')';
+  return code;
+};
+
+// Generator block_set_led
+Blockly.Python['block_set_multiple_led'] = function(block) {
+  var value_led = block.getFieldValue('LED_IDS');
+  var value_color = Blockly.Python.valueToCode(block, 'COLOR', Blockly.Python.ORDER_ATOMIC);
+
+  var code = 'Light.set(' + 'led_index=[' + value_led + '], ' + 'color=' + value_color + ')';
   return code;
 };
 
@@ -296,7 +305,164 @@ Blockly.Python['spin_motor'] = function(block) {
     ', ' +
     'unit_rotation=' +
     dropdown_unit +
-    ')';
+    ')\n';
 
   return code;
+};
+
+Blockly.Python['controls_repeat_ext2'] = function(block) {
+  // Repeat n times.
+  if (block.getField('TIMES')) {
+    // Internal number.
+    var repeats = String(parseInt(block.getFieldValue('TIMES'), 10));
+  } else {
+    // External number.
+    var repeats = Blockly.Python.valueToCode(block, 'TIMES',
+        Blockly.Python.ORDER_NONE) || '0';
+  }
+  if (Blockly.isNumber(repeats)) {
+    repeats = parseInt(repeats, 10);
+  } else {
+    repeats = 'int(' + repeats + ')';
+  }
+  var branch = Blockly.Python.statementToCode(block, 'DO');
+  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
+      Blockly.Python.PASS;
+  var loopVar = Blockly.Python.variableDB_.getDistinctName(
+      'count', Blockly.Variables.NAME_TYPE);
+  var code = 'for ' + loopVar + ' in range(' + repeats + '):\n' + branch;
+  return code;
+};
+
+Blockly.Python['math_arithmetic2'] = function(block) {
+  // Basic arithmetic operators, and power.
+  var OPERATORS = {
+    'ADD': [' + ', Blockly.Python.ORDER_ADDITIVE],
+    'MINUS': [' - ', Blockly.Python.ORDER_ADDITIVE],
+    'MULTIPLY': [' * ', Blockly.Python.ORDER_MULTIPLICATIVE],
+    'DIVIDE': [' / ', Blockly.Python.ORDER_MULTIPLICATIVE],
+    'POWER': [' ** ', Blockly.Python.ORDER_EXPONENTIATION]
+  };
+  var tuple = OPERATORS[block.getFieldValue('OP')];
+  var operator = tuple[0];
+  var order = tuple[1];
+  var argument0 = Blockly.Python.valueToCode(block, 'A', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'B', order) || '0';
+  var code = argument0 + operator + argument1;
+  return [code, order];
+  // In case of 'DIVIDE', division between integers returns different results
+  // in Python 2 and 3. However, is not an issue since Blockly does not
+  // guarantee identical results in all languages.  To do otherwise would
+  // require every operator to be wrapped in a function call.  This would kill
+  // legibility of the generated code.
+};
+
+Blockly.Python['math_round2'] = function(block) {
+  // Math operators with single operand.
+  var operator = block.getFieldValue('OP');
+  var code;
+  var arg;
+  if (operator == 'NEG') {
+    // Negation is a special case given its different operator precedence.
+    var code = Blockly.Python.valueToCode(block, 'NUM',
+        Blockly.Python.ORDER_UNARY_SIGN) || '0';
+    return ['-' + code, Blockly.Python.ORDER_UNARY_SIGN];
+  }
+  Blockly.Python.definitions_['import_math'] = 'import math';
+  if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
+    arg = Blockly.Python.valueToCode(block, 'NUM',
+        Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+  } else {
+    arg = Blockly.Python.valueToCode(block, 'NUM',
+        Blockly.Python.ORDER_NONE) || '0';
+  }
+  // First, handle cases which generate values that don't need parentheses
+  // wrapping the code.
+  switch (operator) {
+    case 'ABS':
+      code = 'math.fabs(' + arg + ')';
+      break;
+    case 'ROOT':
+      code = 'math.sqrt(' + arg + ')';
+      break;
+    case 'LN':
+      code = 'math.log(' + arg + ')';
+      break;
+    case 'LOG10':
+      code = 'math.log10(' + arg + ')';
+      break;
+    case 'EXP':
+      code = 'math.exp(' + arg + ')';
+      break;
+    case 'POW10':
+      code = 'math.pow(10,' + arg + ')';
+      break;
+    case 'ROUND':
+      code = 'round(' + arg + ')';
+      break;
+    case 'ROUNDUP':
+      code = 'math.ceil(' + arg + ')';
+      break;
+    case 'ROUNDDOWN':
+      code = 'math.floor(' + arg + ')';
+      break;
+    case 'SIN':
+      code = 'math.sin(' + arg + ' / 180.0 * math.pi)';
+      break;
+    case 'COS':
+      code = 'math.cos(' + arg + ' / 180.0 * math.pi)';
+      break;
+    case 'TAN':
+      code = 'math.tan(' + arg + ' / 180.0 * math.pi)';
+      break;
+  }
+  if (code) {
+    return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+  }
+  // Second, handle cases which generate values that may need parentheses
+  // wrapping the code.
+  switch (operator) {
+    case 'ASIN':
+      code = 'math.asin(' + arg + ') / math.pi * 180';
+      break;
+    case 'ACOS':
+      code = 'math.acos(' + arg + ') / math.pi * 180';
+      break;
+    case 'ATAN':
+      code = 'math.atan(' + arg + ') / math.pi * 180';
+      break;
+    default:
+      throw Error('Unknown math operator: ' + operator);
+  }
+  return [code, Blockly.Python.ORDER_MULTIPLICATIVE];
+};
+
+Blockly.Python['math_random_int2'] = function(block) {
+  // Random integer between [X] and [Y].
+  Blockly.Python.definitions_['import_random'] = 'import random';
+  var argument0 = Blockly.Python.valueToCode(block, 'FROM',
+      Blockly.Python.ORDER_NONE) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'TO',
+      Blockly.Python.ORDER_NONE) || '0';
+  var code = 'random.randint(' + argument0 + ', ' + argument1 + ')';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
+};
+
+Blockly.Python['colour_rgb2'] = function(block) {
+  // Compose a colour from RGB components expressed as percentages.
+  var functionName = Blockly.Python.provideFunction_(
+      'colour_rgb',
+      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(r, g, b):',
+       '  r = round(min(100, max(0, r)) * 2.55)',
+       '  g = round(min(100, max(0, g)) * 2.55)',
+       '  b = round(min(100, max(0, b)) * 2.55)',
+       '  return \'#%02x%02x%02x\' % (r, g, b)']);
+  var r = Blockly.Python.valueToCode(block, 'RED',
+                                     Blockly.Python.ORDER_NONE) || 0;
+  var g = Blockly.Python.valueToCode(block, 'GREEN',
+                                     Blockly.Python.ORDER_NONE) || 0;
+  var b = Blockly.Python.valueToCode(block, 'BLUE',
+                                     Blockly.Python.ORDER_NONE) || 0;
+  var code = functionName + '(' + r + ', ' + g + ', ' + b + ')';
+  return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };

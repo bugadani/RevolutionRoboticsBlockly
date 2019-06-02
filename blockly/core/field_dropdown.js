@@ -125,14 +125,14 @@ Blockly.FieldDropdown.prototype.init = function() {
     return;
   }
   // Add dropdown arrow: "option ▾" (LTR) or "▾ אופציה" (RTL)
-  this.arrow_ = Blockly.utils.createSvgElement('tspan', {}, null);
+  /*this.arrow_ = Blockly.utils.createSvgElement('tspan', {}, null);
   this.arrow_.appendChild(
       document.createTextNode(
       this.sourceBlock_.RTL
         ? Blockly.FieldDropdown.ARROW_CHAR + ' '
         : ' ' + Blockly.FieldDropdown.ARROW_CHAR
       )
-  );
+  );*/
 
   Blockly.FieldDropdown.superClass_.init.call(this);
 };
@@ -455,7 +455,7 @@ Blockly.FieldDropdown.prototype.render_ = function() {
   }
   if (this.sourceBlock_ && this.arrow_) {
     // Update arrow's colour.
-    this.arrow_.style.fill = this.sourceBlock_.getColour();
+    // this.arrow_.style.fill = this.sourceBlock_.getColour();
   }
   var child;
   while ((child = this.textElement_.firstChild)) {
@@ -496,8 +496,8 @@ Blockly.FieldDropdown.prototype.renderSelectedImage_ = function() {
       this.imageJson_.src
   );
   // Insert dropdown arrow.
-  this.textElement_.appendChild(this.arrow_);
-  var arrowWidth = Blockly.Field.getCachedWidth(this.arrow_);
+  // this.textElement_.appendChild(this.arrow_);
+  var arrowWidth = 2; //Blockly.Field.getCachedWidth(this.arrow_);
   this.size_.height = Number(this.imageJson_.height) + 19;
   this.size_.width = Number(this.imageJson_.width) + arrowWidth;
   if (this.sourceBlock_.RTL) {
@@ -520,9 +520,9 @@ Blockly.FieldDropdown.prototype.renderSelectedText_ = function() {
   this.textElement_.appendChild(textNode);
   // Insert dropdown arrow.
   if (this.sourceBlock_.RTL) {
-    this.textElement_.insertBefore(this.arrow_, this.textElement_.firstChild);
+    // this.textElement_.insertBefore(this.arrow_, this.textElement_.firstChild);
   } else {
-    this.textElement_.appendChild(this.arrow_);
+    // this.textElement_.appendChild(this.arrow_);
   }
   this.textElement_.setAttribute('text-anchor', 'start');
   this.textElement_.setAttribute('x', 0);
@@ -540,7 +540,7 @@ Blockly.FieldDropdown.prototype.renderSelectedText_ = function() {
 Blockly.FieldDropdown.prototype.updateWidth = function() {
   if (this.imageJson_ && (goog.userAgent.IE || goog.userAgent.EDGE)) {
     // Recalculate the full width.
-    var arrowWidth = Blockly.Field.getCachedWidth(this.arrow_);
+    var arrowWidth =  2; //Blockly.Field.getCachedWidth(this.arrow_);
     var width = Number(this.imageJson_.width) + arrowWidth + Blockly.BlockSvg.SEP_SPACE_X;
     if (this.borderRect_) {
       this.borderRect_.setAttribute('width', width);
