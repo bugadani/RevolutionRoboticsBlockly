@@ -396,7 +396,7 @@ Blockly.Variables.renameVariable = function(workspace, variable, opt_callback) {
  *     variable name, or null if the user picked something illegal.
  */
 Blockly.Variables.promptName = function(promptText, defaultText, callback) {
-  Blockly.NativeBridge.input('VARIABLE', promptText, defaultText, function(newVar) {
+  Blockly.NativeBridge.input('variable', promptText, defaultText, function(newVar) {
     // Merge runs of whitespace.  Strip leading and trailing whitespace.
     // Beyond this, all names are legal.
     if (newVar) {

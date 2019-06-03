@@ -24,7 +24,7 @@ Blockly.NativeBridge.CONTEXT_ACTION_TYPE = {
 };
 
 Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
-  return `${sourceBlockType}.${fieldName}`;
+  return `${sourceBlockType}.${fieldName.toLowerCase()}`;
 };
 
 Blockly.NativeBridge.optionSelector = function(type, defaultKey, options, callback) {
@@ -52,5 +52,5 @@ Blockly.NativeBridge.blockContext = function(title, comment, callback) {
     comment: comment
   };
 
-  Blockly.prompt('BLOCK_CONTEXT', JSON.stringify(contextObject), callback);
+  Blockly.prompt('block_context', JSON.stringify(contextObject), callback);
 };

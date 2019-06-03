@@ -9,7 +9,7 @@ Blockly.Python['block_terminate_program'] = function(block) {
 };
 
 // Generator block_terminate_all
-Blockly.Python['block_terminate_allblock_terminate_all'] = function(block) {
+Blockly.Python['block_terminate_all'] = function(block) {
   var code = 'Control.terminate_all()\n';
   return code;
 };
@@ -68,11 +68,11 @@ Blockly.Python['block_repeat_until'] = function(block) {
 
 // Generator block_drive
 Blockly.Python['block_drive'] = function(block) {
-  var dropdown_direction = block.getFieldValue('DIRECTION');
+  var dropdown_direction = block.getFieldValue('DIRECTION_SELECTOR');
   var number_rotation = Blockly.Python.valueToCode(block, 'ROTATION', Blockly.Python.ORDER_ATOMIC);
-  var unit_rotation = block.getFieldValue('UNIT_ROTATION');
+  var unit_rotation = block.getFieldValue('UNIT_ROTATION_SELECTOR');
   var number_speed = Blockly.Python.valueToCode(block, 'SPEED', Blockly.Python.ORDER_ATOMIC);
-  var unit_speed = block.getFieldValue('UNIT_SPEED');
+  var unit_speed = block.getFieldValue('UNIT_SPEED_SELECTOR');
 
   var code =
     'robot.drive(' +
@@ -96,15 +96,15 @@ Blockly.Python['block_drive'] = function(block) {
 
 // Generator block_motor
 Blockly.Python['block_motor'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  var direction = block.getFieldValue('DIRECTION');
+  var text_name = block.getFieldValue('NAME_INPUT');
+  var direction = block.getFieldValue('DIRECTION_SELECTOR');
   var amount = Blockly.Python.valueToCode(block, 'AMOUNT', Blockly.Python.ORDER_ATOMIC);
-  var unit_amount = block.getFieldValue('UNIT_AMOUNT');
+  var unit_amount = block.getFieldValue('UNIT_AMOUNT_SELECTOR');
   var limit = Blockly.Python.valueToCode(block, 'LIMIT', Blockly.Python.ORDER_ATOMIC);
-  var unit_limit = block.getFieldValue('UNIT_LIMIT');
+  var unit_limit = block.getFieldValue('UNIT_LIMIT_SELECTOR');
 
   var code =
-  `robot.motors["${text_name}"].move(` +    
+    `robot.motors["${text_name}"].move(` +
     'direction=' +
     direction +
     ', ' +
@@ -126,17 +126,16 @@ Blockly.Python['block_motor'] = function(block) {
 
 // Generator block_stop_motor
 Blockly.Python['block_stop_motor'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  var dropdown_action = block.getFieldValue('STOP_ACTION');
+  var text_name = block.getFieldValue('NAME_INPUT');
+  var dropdown_action = block.getFieldValue('STOP_ACTION_SELECTOR');
 
-  var code = `robot.motors["${text_name}"].stop(` 
-  + 'action=' + dropdown_action + ')\n';
+  var code = `robot.motors["${text_name}"].stop(` + 'action=' + dropdown_action + ')\n';
   return code;
 };
 
 // Generator block_stop_all_motors
 Blockly.Python['block_stop_all_motors'] = function(block) {
-  var dropdown_action = block.getFieldValue('STOP_ALL_ACTION');
+  var dropdown_action = block.getFieldValue('STOP_ALL_ACTION_SELECTOR');
 
   var code = 'robot.stop_all_motors(action=' + dropdown_action + ')\n';
   return code;
@@ -144,8 +143,8 @@ Blockly.Python['block_stop_all_motors'] = function(block) {
 
 // Generator block_ultrasonic_sensor
 Blockly.Python['block_ultrasonic_sensor'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  
+  var text_name = block.getFieldValue('NAME_INPUT');
+
   var code = `robot.sensors["${text_name}"].read()`;
 
   return [code, Blockly.Python.ORDER_NONE];
@@ -153,7 +152,7 @@ Blockly.Python['block_ultrasonic_sensor'] = function(block) {
 
 // Generator block_bumper
 Blockly.Python['block_bumper'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
+  var text_name = block.getFieldValue('NAME_INPUT');
 
   var code = `robot.sensors["${text_name}"].read()`;
   return [code, Blockly.Python.ORDER_NONE];
@@ -161,7 +160,7 @@ Blockly.Python['block_bumper'] = function(block) {
 
 // Generator block_tilt
 Blockly.Python['block_tilt'] = function(block) {
-  var dropdown_tilt = block.getFieldValue('DIRECTION_TILT');
+  var dropdown_tilt = block.getFieldValue('DIRECTION_TILT_SELECTOR');
 
   var code = 'Sensor.get_tilt_state(direction=' + dropdown_tilt + ')';
   return [code, Blockly.Python.ORDER_NONE];
@@ -169,8 +168,8 @@ Blockly.Python['block_tilt'] = function(block) {
 
 // Generator block_play_note
 Blockly.Python['block_play_note'] = function(block) {
-  var dropdown_octave = block.getFieldValue('OCTAVE');
-  var dropdown_key = block.getFieldValue('KEY');
+  var dropdown_octave = block.getFieldValue('OCTAVE_SELECTOR');
+  var dropdown_key = block.getFieldValue('KEY_SELECTOR');
   var value_duration = Blockly.Python.valueToCode(block, 'DURATION', Blockly.Python.ORDER_ATOMIC);
   Blockly.Python.definitions_['import_robot_lib'] = 'import robot_lib';
   var code =
@@ -245,7 +244,7 @@ Blockly.Python['logic_not'] = function(block) {
 // Generator block_bumper
 Blockly.Python['math_trig2'] = function(block) {
   var value_right = Blockly.Python.valueToCode(block, 'RIGHT', Blockly.Python.ORDER_ATOMIC);
-  var selected_option = block.getFieldValue('MATH_TRIG');
+  var selected_option = block.getFieldValue('MATH_TRIG_SELECTOR');
 
   Blockly.Python.definitions_['import_math'] = 'import math';
   var code = 'math.' + selected_option + '(' + value_right + ')';
@@ -256,18 +255,17 @@ Blockly.Python['math_trig2'] = function(block) {
 Blockly.Python['if_then_else'] = function(block) {
   // If/elseif/else condition.
   var n = 0;
-  var code = '', branchCode, conditionCode;
+  var code = '',
+    branchCode,
+    conditionCode;
 
-  conditionCode = Blockly.Python.valueToCode(block, 'COND',
-      Blockly.Python.ORDER_NONE) || 'False';
+  conditionCode = Blockly.Python.valueToCode(block, 'COND', Blockly.Python.ORDER_NONE) || 'False';
 
-    branchCode = Blockly.Python.statementToCode(block, 'IN_IF') ||
-        Blockly.Python.PASS;
-    code += (n == 0 ? 'if ' : 'elif ' ) + conditionCode + ':\n' + branchCode;
+  branchCode = Blockly.Python.statementToCode(block, 'IN_IF') || Blockly.Python.PASS;
+  code += (n == 0 ? 'if ' : 'elif ') + conditionCode + ':\n' + branchCode;
 
   if (block.getInput('IN_ELSE')) {
-    branchCode = Blockly.Python.statementToCode(block, 'IN_ELSE') ||
-        Blockly.Python.PASS;
+    branchCode = Blockly.Python.statementToCode(block, 'IN_ELSE') || Blockly.Python.PASS;
     code += 'else:\n' + branchCode;
   }
   return code;
@@ -276,24 +274,24 @@ Blockly.Python['if_then_else'] = function(block) {
 Blockly.Python['if_then'] = function(block) {
   // If/elseif/else condition.
   var n = 0;
-  var code = '', branchCode, conditionCode;
-  
-  conditionCode = Blockly.Python.valueToCode(block, 'COND',
-      Blockly.Python.ORDER_NONE) || 'False';
+  var code = '',
+    branchCode,
+    conditionCode;
 
-    branchCode = Blockly.Python.statementToCode(block, 'IN_IF') ||
-        Blockly.Python.PASS;
-    code += (n == 0 ? 'if ' : 'elif ' ) + conditionCode + ':\n' + branchCode;
-  
+  conditionCode = Blockly.Python.valueToCode(block, 'COND', Blockly.Python.ORDER_NONE) || 'False';
+
+  branchCode = Blockly.Python.statementToCode(block, 'IN_IF') || Blockly.Python.PASS;
+  code += (n == 0 ? 'if ' : 'elif ') + conditionCode + ':\n' + branchCode;
+
   return code;
 };
 
 // Generator block_motor
 Blockly.Python['spin_motor'] = function(block) {
-  var text_name = block.getFieldValue('NAME');
-  var dropdown_direction = block.getFieldValue('DIRECTION');
+  var text_name = block.getFieldValue('NAME_INPUT');
+  var dropdown_direction = block.getFieldValue('DIRECTION_SELECTOR');
   var number_rotation = Blockly.Python.valueToCode(block, 'ROTATION', Blockly.Python.ORDER_ATOMIC);
-  var dropdown_unit = block.getFieldValue('UNIT_SPEED');
+  var dropdown_unit = block.getFieldValue('UNIT_SPEED_SELECTOR');
 
   var code =
     `robot.motors["${text_name}"].spin(` +
@@ -317,8 +315,7 @@ Blockly.Python['controls_repeat_ext2'] = function(block) {
     var repeats = String(parseInt(block.getFieldValue('TIMES'), 10));
   } else {
     // External number.
-    var repeats = Blockly.Python.valueToCode(block, 'TIMES',
-        Blockly.Python.ORDER_NONE) || '0';
+    var repeats = Blockly.Python.valueToCode(block, 'TIMES', Blockly.Python.ORDER_NONE) || '0';
   }
   if (Blockly.isNumber(repeats)) {
     repeats = parseInt(repeats, 10);
@@ -326,10 +323,8 @@ Blockly.Python['controls_repeat_ext2'] = function(block) {
     repeats = 'int(' + repeats + ')';
   }
   var branch = Blockly.Python.statementToCode(block, 'DO');
-  branch = Blockly.Python.addLoopTrap(branch, block.id) ||
-      Blockly.Python.PASS;
-  var loopVar = Blockly.Python.variableDB_.getDistinctName(
-      'count', Blockly.Variables.NAME_TYPE);
+  branch = Blockly.Python.addLoopTrap(branch, block.id) || Blockly.Python.PASS;
+  var loopVar = Blockly.Python.variableDB_.getDistinctName('count', Blockly.Variables.NAME_TYPE);
   var code = 'for ' + loopVar + ' in range(' + repeats + '):\n' + branch;
   return code;
 };
@@ -337,13 +332,13 @@ Blockly.Python['controls_repeat_ext2'] = function(block) {
 Blockly.Python['math_arithmetic2'] = function(block) {
   // Basic arithmetic operators, and power.
   var OPERATORS = {
-    'ADD': [' + ', Blockly.Python.ORDER_ADDITIVE],
-    'MINUS': [' - ', Blockly.Python.ORDER_ADDITIVE],
-    'MULTIPLY': [' * ', Blockly.Python.ORDER_MULTIPLICATIVE],
-    'DIVIDE': [' / ', Blockly.Python.ORDER_MULTIPLICATIVE],
-    'POWER': [' ** ', Blockly.Python.ORDER_EXPONENTIATION]
+    ADD: [' + ', Blockly.Python.ORDER_ADDITIVE],
+    MINUS: [' - ', Blockly.Python.ORDER_ADDITIVE],
+    MULTIPLY: [' * ', Blockly.Python.ORDER_MULTIPLICATIVE],
+    DIVIDE: [' / ', Blockly.Python.ORDER_MULTIPLICATIVE],
+    POWER: [' ** ', Blockly.Python.ORDER_EXPONENTIATION]
   };
-  var tuple = OPERATORS[block.getFieldValue('OP')];
+  var tuple = OPERATORS[block.getFieldValue('OPERATOR_SELECTOR')];
   var operator = tuple[0];
   var order = tuple[1];
   var argument0 = Blockly.Python.valueToCode(block, 'A', order) || '0';
@@ -359,22 +354,19 @@ Blockly.Python['math_arithmetic2'] = function(block) {
 
 Blockly.Python['math_round2'] = function(block) {
   // Math operators with single operand.
-  var operator = block.getFieldValue('OP');
+  var operator = block.getFieldValue('OPERATOR_SELECTOR');
   var code;
   var arg;
   if (operator == 'NEG') {
     // Negation is a special case given its different operator precedence.
-    var code = Blockly.Python.valueToCode(block, 'NUM',
-        Blockly.Python.ORDER_UNARY_SIGN) || '0';
+    var code = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_UNARY_SIGN) || '0';
     return ['-' + code, Blockly.Python.ORDER_UNARY_SIGN];
   }
   Blockly.Python.definitions_['import_math'] = 'import math';
   if (operator == 'SIN' || operator == 'COS' || operator == 'TAN') {
-    arg = Blockly.Python.valueToCode(block, 'NUM',
-        Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
+    arg = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_MULTIPLICATIVE) || '0';
   } else {
-    arg = Blockly.Python.valueToCode(block, 'NUM',
-        Blockly.Python.ORDER_NONE) || '0';
+    arg = Blockly.Python.valueToCode(block, 'NUM', Blockly.Python.ORDER_NONE) || '0';
   }
   // First, handle cases which generate values that don't need parentheses
   // wrapping the code.
@@ -440,29 +432,24 @@ Blockly.Python['math_round2'] = function(block) {
 Blockly.Python['math_random_int2'] = function(block) {
   // Random integer between [X] and [Y].
   Blockly.Python.definitions_['import_random'] = 'import random';
-  var argument0 = Blockly.Python.valueToCode(block, 'FROM',
-      Blockly.Python.ORDER_NONE) || '0';
-  var argument1 = Blockly.Python.valueToCode(block, 'TO',
-      Blockly.Python.ORDER_NONE) || '0';
+  var argument0 = Blockly.Python.valueToCode(block, 'FROM', Blockly.Python.ORDER_NONE) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'TO', Blockly.Python.ORDER_NONE) || '0';
   var code = 'random.randint(' + argument0 + ', ' + argument1 + ')';
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
 
 Blockly.Python['colour_rgb2'] = function(block) {
   // Compose a colour from RGB components expressed as percentages.
-  var functionName = Blockly.Python.provideFunction_(
-      'colour_rgb',
-      ['def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(r, g, b):',
-       '  r = round(min(100, max(0, r)) * 2.55)',
-       '  g = round(min(100, max(0, g)) * 2.55)',
-       '  b = round(min(100, max(0, b)) * 2.55)',
-       '  return \'#%02x%02x%02x\' % (r, g, b)']);
-  var r = Blockly.Python.valueToCode(block, 'RED',
-                                     Blockly.Python.ORDER_NONE) || 0;
-  var g = Blockly.Python.valueToCode(block, 'GREEN',
-                                     Blockly.Python.ORDER_NONE) || 0;
-  var b = Blockly.Python.valueToCode(block, 'BLUE',
-                                     Blockly.Python.ORDER_NONE) || 0;
+  var functionName = Blockly.Python.provideFunction_('colour_rgb', [
+    'def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(r, g, b):',
+    '  r = round(min(100, max(0, r)) * 2.55)',
+    '  g = round(min(100, max(0, g)) * 2.55)',
+    '  b = round(min(100, max(0, b)) * 2.55)',
+    "  return '#%02x%02x%02x' % (r, g, b)"
+  ]);
+  var r = Blockly.Python.valueToCode(block, 'RED', Blockly.Python.ORDER_NONE) || 0;
+  var g = Blockly.Python.valueToCode(block, 'GREEN', Blockly.Python.ORDER_NONE) || 0;
+  var b = Blockly.Python.valueToCode(block, 'BLUE', Blockly.Python.ORDER_NONE) || 0;
   var code = functionName + '(' + r + ', ' + g + ', ' + b + ')';
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
