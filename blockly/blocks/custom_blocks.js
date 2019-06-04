@@ -632,7 +632,7 @@ Blockly.Blocks['math_arithmetic2'] = {
           ['%{BKY_MATH_SUBTRACTION_SYMBOL}', 'MINUS'],
           ['%{BKY_MATH_MULTIPLICATION_SYMBOL}', 'MULTIPLY'],
           ['%{BKY_MATH_DIVISION_SYMBOL}', 'DIVIDE'],
-          ['%{BKY_MATH_POWER_SYMBOL}', 'POWER']
+          ['%', 'MODULO']
         ]),
         'OPERATOR_SELECTOR'
     );
