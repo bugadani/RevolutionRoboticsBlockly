@@ -231,9 +231,12 @@ Blockly.Blocks['controls_repeat_ext2'] = {
 // Block block_drive
 Blockly.Blocks['block_drive'] = {
   init: function() {
+    
+    var image = CUSTOM_IMAGES.DIRECTION_FWD;
+
     this.appendDummyInput()
         .appendField(
-            new Blockly.FieldImage(CUSTOM_IMAGES.DIRECTION_FWD, 15, 15, '*'),
+            new Blockly.FieldImage(image, 15, 15, '*'),
             'DIRECTION_IMAGE'
         )
         .appendField('drive', 'DIRECTION_LABEL')

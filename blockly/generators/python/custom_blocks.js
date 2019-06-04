@@ -205,7 +205,7 @@ Blockly.Python['block_set_led'] = function(block) {
   var value_led = Blockly.Python.valueToCode(block, 'LED', Blockly.Python.ORDER_ATOMIC);
   var value_color = Blockly.Python.valueToCode(block, 'COLOR', Blockly.Python.ORDER_ATOMIC);
 
-  var code = 'Light.set(' + 'led_index=' + value_led + ', ' + 'color=' + value_color + ')';
+  var code = 'robot.led.set(' + 'led_index=' + value_led + ', ' + 'color=' + value_color + ')\n';
   return code;
 };
 
@@ -214,7 +214,7 @@ Blockly.Python['block_set_multiple_led'] = function(block) {
   var value_led = block.getFieldValue('LED_IDS');
   var value_color = Blockly.Python.valueToCode(block, 'COLOR', Blockly.Python.ORDER_ATOMIC);
 
-  var code = 'Light.set(' + 'led_index=[' + value_led + '], ' + 'color=' + value_color + ')';
+  var code = 'robot.led.set(' + 'led_index=[' + value_led + '], ' + 'color=' + value_color + ')\n';
   return code;
 };
 
