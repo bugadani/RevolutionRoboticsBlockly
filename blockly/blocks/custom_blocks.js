@@ -52,16 +52,14 @@ function getDirectionLabelText(directionID) {
   return 'drive';
 }
 
-function createShadowElement(workspace, blockType, input, defaultNumberValue) {
-  var numberShadowBlock = workspace.newBlock(blockType);
-  numberShadowBlock.setShadow(true);
+function createShadowElement(workspace, blockType, input, defaultValue) {
+  var shadowBlock = workspace.newBlock(blockType);
+  shadowBlock.setShadow(true);
 
-  if (defaultNumberValue) {
-    numberShadowBlock.setFieldValue(defaultNumberValue, 'NUM');
+  if (defaultValue) {
+    shadowBlock.setFieldValue(defaultValue, 'NUM');
   }
-  var outputConnection = numberShadowBlock.outputConnection;
-  var inputConnection = input.connection;
-  inputConnection.connect(outputConnection);
+  input.connection.connect(shadowBlock.outputConnection);
 }
 
 // Terminate program
@@ -231,14 +229,10 @@ Blockly.Blocks['controls_repeat_ext2'] = {
 // Block block_drive
 Blockly.Blocks['block_drive'] = {
   init: function() {
-    
     var image = CUSTOM_IMAGES.DIRECTION_FWD;
 
     this.appendDummyInput()
-        .appendField(
-            new Blockly.FieldImage(image, 15, 15, '*'),
-            'DIRECTION_IMAGE'
-        )
+        .appendField(new Blockly.FieldImage(image, 15, 15, '*'), 'DIRECTION_IMAGE')
         .appendField('drive', 'DIRECTION_LABEL')
         .appendField(
             new Blockly.FieldDropdown([
@@ -533,15 +527,15 @@ Blockly.Blocks['block_set_led'] = {
         new Blockly.FieldImage(CUSTOM_IMAGES.LIGHT, 15, 15, '*'),
         'LIGHT_IMAGE'
     );
+
     var ledValueInput = this.appendValueInput('LED')
         .setCheck('Number')
         .appendField('set LED');
-
     createShadowElement(this.workspace, 'math_number', ledValueInput, '1');
+
     var colorValueInput = this.appendValueInput('COLOR')
         .setCheck('Colour')
         .appendField('color');
-
     createShadowElement(this.workspace, 'colour_picker', colorValueInput);
 
     this.setInputsInline(true);

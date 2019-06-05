@@ -146,7 +146,7 @@ Blockly.FieldDropdown.prototype.showEditor_ = function() {
   var fieldDropdown = this;
 
   Blockly.NativeBridge.optionSelector(
-      Blockly.NativeBridge.createPromptType(fieldDropdown.sourceBlock_.type, fieldDropdown.name),
+      Blockly.NativeBridge.createPromptType(fieldDropdown.sourceBlock_, fieldDropdown),
       fieldDropdown.value_,
       fieldDropdown.getOptions(),
       function(newValue) {

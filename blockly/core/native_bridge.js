@@ -23,8 +23,21 @@ Blockly.NativeBridge.CONTEXT_ACTION_TYPE = {
   DUPLICATE_BLOCK: 'DUPLICATE_BLOCK'
 };
 
-Blockly.NativeBridge.createPromptType = function(sourceBlockType, fieldName) {
-  return `${sourceBlockType}.${fieldName.toLowerCase()}`;
+Blockly.NativeBridge.createPromptType = function(sourceBlock, field) {
+  if (sourceBlock.isShadow()) {
+    var parentBlock = sourceBlock.getParent();
+    var childrenIDs = parentBlock.getChildren().map(child => child.id);
+    var index = childrenIDs.findIndex(id => sourceBlock.id === id);
+    var inputNames = parentBlock.inputList
+      .filter(input => input.type === 1)
+      .map(input => input.name);
+
+    var fieldName = inputNames[index].toLowerCase();
+
+    return `${parentBlock.type}.${fieldName}.${sourceBlock.type}.${field.name.toLowerCase()}`;
+  }
+
+  return `${sourceBlock.type}.${field.name.toLowerCase()}`;
 };
 
 Blockly.NativeBridge.optionSelector = function(type, defaultKey, options, callback) {

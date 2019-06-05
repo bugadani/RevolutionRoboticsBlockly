@@ -341,7 +341,7 @@ Blockly.FieldColour.prototype.showEditor_ = function() {
   var fieldColor = this;
 
   Blockly.NativeBridge.optionSelector(
-      Blockly.NativeBridge.createPromptType(fieldColor.sourceBlock_.type, fieldColor.name),
+      Blockly.NativeBridge.createPromptType(fieldColor.sourceBlock_, fieldColor),
       fieldColor.getValue(),
       Blockly.FieldColour.COLOURS,
       function(newValue) {

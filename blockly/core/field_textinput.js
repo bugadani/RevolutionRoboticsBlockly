@@ -173,9 +173,8 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
  */
 Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
   var fieldText = this;
-
   Blockly.NativeBridge.input(
-      Blockly.NativeBridge.createPromptType(fieldText.sourceBlock_.type, fieldText.name),
+      Blockly.NativeBridge.createPromptType(fieldText.sourceBlock_, fieldText),
       Blockly.Msg['CHANGE_VALUE_TITLE'],
       fieldText.text_,
       function(newValue) {
