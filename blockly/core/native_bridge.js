@@ -59,6 +59,15 @@ Blockly.NativeBridge.input = function(type, title, defaultInput, callback) {
   Blockly.prompt(type, JSON.stringify(textInputObject), callback);
 };
 
+Blockly.NativeBridge.slider = function(type, title, defaultInput, minValue, maxValue, callback) {
+  var sliderObject = {
+    title: title,
+    defaultInput: defaultInput
+  };
+
+  Blockly.prompt(type, JSON.stringify(sliderObject), callback);
+};
+
 Blockly.NativeBridge.blockContext = function(title, comment, callback) {
   var contextObject = {
     title: title,

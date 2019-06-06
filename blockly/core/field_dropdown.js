@@ -150,15 +150,19 @@ Blockly.FieldDropdown.prototype.showEditor_ = function() {
       fieldDropdown.value_,
       fieldDropdown.getOptions(),
       function(newValue) {
-        if (fieldDropdown.sourceBlock_) {
-        // Call any validation function, and allow it to override.
-          newValue = fieldDropdown.callValidator(newValue);
-        }
-        if (newValue !== null) {
-          fieldDropdown.setValue(newValue);
-        }
+        fieldDropdown.handleDropdownCallback_(newValue);
+        Blockly.Events.setGroup(false);
       }
   );
+};
+
+Blockly.FieldDropdown.prototype.handleDropdownCallback_ = function(newValue) {
+  if (this.sourceBlock_) {
+    newValue = this.callValidator(newValue);
+  }
+  if (newValue !== null) {
+    this.setValue(newValue);
+  }
 };
 
 /**

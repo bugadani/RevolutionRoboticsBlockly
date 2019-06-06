@@ -727,7 +727,7 @@ Blockly.Gesture.prototype.doBubbleClick_ = function() {
  */
 Blockly.Gesture.prototype.doFieldClick_ = function() {
   this.startField_.showEditor_();
-  this.bringBlockToFront_();
+  // this.bringBlockToFront_();
 };
 
 /**

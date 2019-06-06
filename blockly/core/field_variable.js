@@ -34,7 +34,6 @@ goog.require('Blockly.Variables');
 
 goog.require('goog.math.Size');
 
-
 /**
  * Class for a variable's dropdown field.
  * @param {?string} varname The default name for the variable.  If null,
@@ -48,14 +47,13 @@ goog.require('goog.math.Size');
  * @extends {Blockly.FieldDropdown}
  * @constructor
  */
-Blockly.FieldVariable = function(varname, opt_validator, opt_variableTypes,
-    opt_defaultType) {
+Blockly.FieldVariable = function(varname, opt_validator, opt_variableTypes, opt_defaultType) {
   // The FieldDropdown constructor would call setValue, which might create a
   // spurious variable.  Just do the relevant parts of the constructor.
   this.menuGenerator_ = Blockly.FieldVariable.dropdownCreate;
   this.size_ = new goog.math.Size(0, Blockly.BlockSvg.MIN_BLOCK_Y);
   this.setValidator(opt_validator);
-  this.defaultVariableName = (varname || '');
+  this.defaultVariableName = varname || '';
 
   this.setTypes_(opt_variableTypes, opt_defaultType);
   this.value_ = null;
@@ -106,7 +104,11 @@ Blockly.FieldVariable.prototype.initModel = function() {
   }
   this.workspace_ = this.sourceBlock_.workspace;
   var variable = Blockly.Variables.getOrCreateVariablePackage(
-      this.workspace_, null, this.defaultVariableName, this.defaultType_);
+      this.workspace_,
+      null,
+      this.defaultVariableName,
+      this.defaultType_
+  );
 
   // Don't fire a change event for this setValue.  It would have null as the
   // old value, which is not valid.
@@ -178,17 +180,18 @@ Blockly.FieldVariable.prototype.setValue = function(id) {
   var variable = Blockly.Variables.getVariable(workspace, id);
 
   if (!variable) {
-    throw Error('Variable id doesn\'t point to a real variable!  ID was ' + id);
+    throw Error("Variable id doesn't point to a real variable!  ID was " + id);
   }
   // Type checks!
   var type = variable.type;
   if (!this.typeIsAllowed_(type)) {
-    throw Error('Variable type doesn\'t match this field!  Type was ' + type);
+    throw Error("Variable type doesn't match this field!  Type was " + type);
   }
   if (this.sourceBlock_ && Blockly.Events.isEnabled()) {
     var oldValue = this.variable_ ? this.variable_.getId() : null;
-    Blockly.Events.fire(new Blockly.Events.BlockChange(
-        this.sourceBlock_, 'field', this.name, oldValue, id));
+    Blockly.Events.fire(
+        new Blockly.Events.BlockChange(this.sourceBlock_, 'field', this.name, oldValue, id)
+    );
   }
   this.variable_ = variable;
   this.value_ = id;
@@ -234,8 +237,7 @@ Blockly.FieldVariable.prototype.getVariableTypes_ = function() {
   if (variableTypes.length == 0) {
     // Throw an error if variableTypes is an empty list.
     var name = this.getText();
-    throw Error('\'variableTypes\' of field variable ' +
-      name + ' was an empty list');
+    throw Error("'variableTypes' of field variable " + name + ' was an empty list');
   }
   return variableTypes;
 };
@@ -250,8 +252,7 @@ Blockly.FieldVariable.prototype.getVariableTypes_ = function() {
  *     field's value is not explicitly set.  Defaults to ''.
  * @private
  */
-Blockly.FieldVariable.prototype.setTypes_ = function(opt_variableTypes,
-    opt_defaultType) {
+Blockly.FieldVariable.prototype.setTypes_ = function(opt_variableTypes, opt_defaultType) {
   // If you expected that the default type would be the same as the only entry
   // in the variable types array, tell the Blockly team by commenting on #1499.
   var defaultType = opt_defaultType || '';
@@ -268,15 +269,15 @@ Blockly.FieldVariable.prototype.setTypes_ = function(opt_variableTypes,
       }
     }
     if (!isInArray) {
-      throw Error('Invalid default type \'' + defaultType + '\' in ' +
-          'the definition of a FieldVariable');
+      throw Error(
+          "Invalid default type '" + defaultType + "' in " + 'the definition of a FieldVariable'
+      );
     }
   } else {
-    throw Error('\'variableTypes\' was not an array in the definition of ' +
-        'a FieldVariable');
+    throw Error("'variableTypes' was not an array in the definition of " + 'a FieldVariable');
   }
   // Only update the field once all checks pass.
-  this.defaultType_ =  defaultType;
+  this.defaultType_ = defaultType;
   this.variableTypes = variableTypes;
 };
 
@@ -288,8 +289,7 @@ Blockly.FieldVariable.prototype.setTypes_ = function(opt_variableTypes,
  */
 Blockly.FieldVariable.dropdownCreate = function() {
   if (!this.variable_) {
-    throw Error('Tried to call dropdownCreate on a variable field with no' +
-        ' variable selected.');
+    throw Error('Tried to call dropdownCreate on a variable field with no' + ' variable selected.');
   }
   var name = this.getText();
   var workspace = null;
@@ -314,17 +314,28 @@ Blockly.FieldVariable.dropdownCreate = function() {
     // Set the UUID as the internal representation of the variable.
     options[i] = [variableModelList[i].name, variableModelList[i].getId()];
   }
-  options.push([Blockly.Msg['RENAME_VARIABLE'], Blockly.RENAME_VARIABLE_ID]);
+  // options.push([Blockly.Msg['RENAME_VARIABLE'], Blockly.RENAME_VARIABLE_ID]);
   if (Blockly.Msg['DELETE_VARIABLE']) {
-    options.push(
-        [
-          Blockly.Msg['DELETE_VARIABLE'].replace('%1', name),
-          Blockly.DELETE_VARIABLE_ID
-        ]
-    );
+    options.push([Blockly.Msg['DELETE_VARIABLE'].replace('%1', name), Blockly.DELETE_VARIABLE_ID]);
   }
 
   return options;
+};
+
+Blockly.FieldVariable.prototype.handleDropdownCallback_ = function(newValue) {
+  var action = JSON.parse(newValue);
+
+  if (action.type && action.payload) {
+    switch (action.type) {
+      case 'DELETE_VARIABLE_ID':
+        this.sourceBlock_.workspace.deleteVariableById(action.payload);
+        return;
+
+      case 'SET_VARIABLE_ID':
+        this.setValue(action.payload);
+        return;
+    }
+  }
 };
 
 /**
