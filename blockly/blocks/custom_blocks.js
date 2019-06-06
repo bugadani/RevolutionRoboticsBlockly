@@ -252,7 +252,7 @@ Blockly.Blocks['block_drive'] = {
         'UNIT_ROTATION_SELECTOR'
     );
 
-    var speedValueInput = this.appendValueInput('SPEED').setCheck('Number');
+    var speedValueInput = this.appendValueInput('SPEED_SLIDER').setCheck('Number');
     createShadowElement(this.workspace, 'math_number', speedValueInput);
 
     this.appendDummyInput().appendField(
@@ -310,7 +310,7 @@ Blockly.Blocks['block_motor'] = {
         'UNIT_AMOUNT_SELECTOR'
     );
 
-    var limitValueInput = this.appendValueInput('LIMIT').setCheck('Number');
+    var limitValueInput = this.appendValueInput('LIMIT_SLIDER').setCheck('Number');
     createShadowElement(this.workspace, 'math_number', limitValueInput);
 
     this.appendDummyInput().appendField(

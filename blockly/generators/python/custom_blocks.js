@@ -71,7 +71,7 @@ Blockly.Python['block_drive'] = function(block) {
   var dropdown_direction = block.getFieldValue('DIRECTION_SELECTOR');
   var number_rotation = Blockly.Python.valueToCode(block, 'ROTATION', Blockly.Python.ORDER_ATOMIC);
   var unit_rotation = block.getFieldValue('UNIT_ROTATION_SELECTOR');
-  var number_speed = Blockly.Python.valueToCode(block, 'SPEED', Blockly.Python.ORDER_ATOMIC);
+  var number_speed = Blockly.Python.valueToCode(block, 'SPEED_SLIDER', Blockly.Python.ORDER_ATOMIC);
   var unit_speed = block.getFieldValue('UNIT_SPEED_SELECTOR');
 
   var code =
@@ -100,7 +100,7 @@ Blockly.Python['block_motor'] = function(block) {
   var direction = block.getFieldValue('DIRECTION_SELECTOR');
   var amount = Blockly.Python.valueToCode(block, 'AMOUNT', Blockly.Python.ORDER_ATOMIC);
   var unit_amount = block.getFieldValue('UNIT_AMOUNT_SELECTOR');
-  var limit = Blockly.Python.valueToCode(block, 'LIMIT', Blockly.Python.ORDER_ATOMIC);
+  var limit = Blockly.Python.valueToCode(block, 'LIMIT_SLIDER', Blockly.Python.ORDER_ATOMIC);
   var unit_limit = block.getFieldValue('UNIT_LIMIT_SELECTOR');
 
   var code =
