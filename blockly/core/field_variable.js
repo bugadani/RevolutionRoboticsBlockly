@@ -323,8 +323,11 @@ Blockly.FieldVariable.dropdownCreate = function() {
 };
 
 Blockly.FieldVariable.prototype.handleDropdownCallback_ = function(newValue) {
-  var action = JSON.parse(newValue);
+  if (newValue === null) {
+    return;
+  }
 
+  var action = JSON.parse(newValue);
   if (action.type && action.payload) {
     switch (action.type) {
       case 'DELETE_VARIABLE_ID':
