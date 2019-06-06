@@ -173,17 +173,34 @@ Blockly.FieldTextInput.prototype.showEditor_ = function(opt_quietInput) {
  */
 Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
   var fieldText = this;
-  Blockly.NativeBridge.input(
-      Blockly.NativeBridge.createPromptType(fieldText.sourceBlock_, fieldText),
-      Blockly.Msg['CHANGE_VALUE_TITLE'],
-      fieldText.text_,
-      function(newValue) {
-        if (fieldText.sourceBlock_) {
-          newValue = fieldText.callValidator(newValue);
+  var promptType = Blockly.NativeBridge.createPromptType(fieldText.sourceBlock_, fieldText);
+
+  if (promptType.includes('slider')) {
+    Blockly.NativeBridge.slider(
+        promptType,
+        Blockly.Msg['CHANGE_VALUE_TITLE'],
+        fieldText.getText(),
+        fieldText.sourceBlock_,
+        function(newValue) {
+          if (fieldText.sourceBlock_) {
+            newValue = fieldText.callValidator(newValue);
+          }
+          fieldText.setValue(newValue);
         }
-        fieldText.setValue(newValue);
-      }
-  );
+    );
+  } else {
+    Blockly.NativeBridge.input(
+        promptType,
+        Blockly.Msg['CHANGE_VALUE_TITLE'],
+        fieldText.getText(),
+        function(newValue) {
+          if (fieldText.sourceBlock_) {
+            newValue = fieldText.callValidator(newValue);
+          }
+          fieldText.setValue(newValue);
+        }
+    );
+  }
 };
 
 /**

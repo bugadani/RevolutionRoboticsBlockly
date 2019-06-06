@@ -15,6 +15,14 @@ function mapOptionSelectorTypeToTitle(promptType) {
   return `Title of ${promptType}`;
 }
 
+function calculateMinMaxValueForSlider(sourceBlock) {
+  var parentInputList = sourceBlock.getParent().inputList;
+  var lastField = parentInputList[parentInputList.length - 1].fieldRow[0];
+  var fieldValue = lastField.getValue();
+
+  return [0, fieldValue == 'Motor.UNIT_SPEED_RPM' ? 170 : 100];
+}
+
 Blockly.NativeBridge.CONTEXT_ACTION_TYPE = {
   ADD_COMMENT: 'ADD_COMMENT',
   REMOVE_COMMENT: 'REMOVE_COMMENT',
@@ -59,10 +67,13 @@ Blockly.NativeBridge.input = function(type, title, defaultInput, callback) {
   Blockly.prompt(type, JSON.stringify(textInputObject), callback);
 };
 
-Blockly.NativeBridge.slider = function(type, title, defaultInput, minValue, maxValue, callback) {
+Blockly.NativeBridge.slider = function(type, title, defaultValue, sourceBlock, callback) {
+  var minMax = calculateMinMaxValueForSlider(sourceBlock);
   var sliderObject = {
     title: title,
-    defaultInput: defaultInput
+    defaultValue: defaultValue,
+    minimum: minMax[0],
+    maximum: minMax[1]
   };
 
   Blockly.prompt(type, JSON.stringify(sliderObject), callback);
