@@ -622,10 +622,10 @@ Blockly.Blocks['math_arithmetic2'] = {
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
-          ['%{BKY_MATH_ADDITION_SYMBOL}', 'ADD'],
-          ['%{BKY_MATH_SUBTRACTION_SYMBOL}', 'MINUS'],
-          ['%{BKY_MATH_MULTIPLICATION_SYMBOL}', 'MULTIPLY'],
-          ['%{BKY_MATH_DIVISION_SYMBOL}', 'DIVIDE'],
+          ['+', 'ADD'],
+          ['-', 'MINUS'],
+          ['*', 'MULTIPLY'],
+          ['/', 'DIVIDE'],
           ['%', 'MODULO']
         ]),
         'OPERATOR_SELECTOR'
