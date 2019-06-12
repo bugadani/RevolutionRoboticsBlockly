@@ -231,7 +231,7 @@ Blockly.Flyout.prototype.init = function(targetWorkspace) {
 
   // Add scrollbar.
   this.scrollbar_ = new Blockly.Scrollbar(this.workspace_,
-      this.horizontalLayout_, false, 'blocklyFlyoutScrollbar');
+     this.horizontalLayout_, false, 'blocklyFlyoutScrollbar');
 
   this.hide();
 
@@ -359,7 +359,9 @@ Blockly.Flyout.prototype.updateDisplay_ = function() {
   this.svgGroup_.style.display = show ? 'block' : 'none';
   // Update the scrollbar's visiblity too since it should mimic the
   // flyout's visibility.
-  this.scrollbar_.setContainerVisible(show);
+  if (this.scrollbar_) {
+    this.scrollbar_.setContainerVisible(show);
+  }
 };
 
 /**
@@ -392,6 +394,7 @@ Blockly.Flyout.prototype.positionAt_ = function(width, height, x, y) {
     // resize failed) our position is still updated.
     this.scrollbar_.setPosition_(
         this.scrollbar_.position_.x, this.scrollbar_.position_.y);
+    this.scrollbar_.setVisible(false);
   }
 };
 
