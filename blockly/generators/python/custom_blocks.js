@@ -453,3 +453,21 @@ Blockly.Python['colour_rgb2'] = function(block) {
   var code = functionName + '(' + r + ', ' + g + ', ' + b + ')';
   return [code, Blockly.Python.ORDER_FUNCTION_CALL];
 };
+
+Blockly.Python['logic_compare2'] = function(block) {
+  // Comparison operator.
+  var OPERATORS = {
+    'EQ': '==',
+    'NEQ': '!=',
+    'LT': '<',
+    'LTE': '<=',
+    'GT': '>',
+    'GTE': '>='
+  };
+  var operator = OPERATORS[block.getFieldValue('LOGIC_SELECTOR')];
+  var order = Blockly.Python.ORDER_RELATIONAL;
+  var argument0 = Blockly.Python.valueToCode(block, 'A', order) || '0';
+  var argument1 = Blockly.Python.valueToCode(block, 'B', order) || '0';
+  var code = argument0 + ' ' + operator + ' ' + argument1;
+  return [code, order];
+};

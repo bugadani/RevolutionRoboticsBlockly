@@ -788,3 +788,28 @@ Blockly.Blocks['colour_rgb2'] = {
     this.setHelpUrl('%{BKY_COLOUR_RGB_HELPURL}');
   }
 };
+
+// Block for repeat n times (external number).
+Blockly.Blocks['logic_compare2'] = {
+  init: function() {
+   
+    this.appendValueInput('A').setCheck('Number');
+    this.appendDummyInput().appendField(
+        new Blockly.FieldDropdown([
+          ['==', 'EQ'],
+          ['!=', 'NEQ'],
+          ['<', 'LT'],
+          ['<=', 'LTE'],
+          ['>', 'GT'],
+          ['>=', 'GTE']
+        ]),
+        'LOGIC_SELECTOR'
+    );
+    this.appendValueInput('B').setCheck('Number');
+    this.setInputsInline(true);
+    this.setOutput(true, 'Boolean');
+    this.setStyle('logic_blocks');
+    this.setTooltip('');
+    this.setHelpUrl('%{BKY_LOGIC_COMPARE_HELPURL}');
+  }
+};
