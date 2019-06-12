@@ -584,6 +584,11 @@ Blockly.Css.CONTENT = [
     'fill: #ccc;',
   '}',
 
+  '.toolboxScrollbarHandle {',
+    'fill: #000000;',
+    'fill-opacity: .9;',
+  '}',
+
   '.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle,',
   '.blocklyScrollbarHandle:hover {',
     'fill: #bbb;',
