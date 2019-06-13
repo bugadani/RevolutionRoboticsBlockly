@@ -69,8 +69,9 @@ var defaultBlockStyles = {
     "colourTertiary":"#6ab3c1"
   },
   "text_blocks": {
-    "colourPrimary": "#FFFFFF",
-    "colourSecondary":"#FFFFFF"
+    "colourPrimary": "#000000",
+    "colourSecondary":"#000000",
+    "colourTertiary":"#000000"
   },
   "variable_blocks": {
     "colourPrimary": "#cc7be6",

@@ -112,6 +112,8 @@ Blockly.Css.setCursor = function(cursor) {
  * Array making up the CSS content for Blockly.
  */
 Blockly.Css.CONTENT = [
+  '@font-face { font-family: Jura; src: url(\'./media/Jura-Medium.ttf\'); } ',
+
   '.blocklySvg {',
     'background-color: #fff;',
     'outline: none;',
@@ -354,8 +356,6 @@ Blockly.Css.CONTENT = [
   '.blocklyReplaceable .blocklyPathDark {',
     'display: none;',
   '}',
-
-  '@font-face { font-family: Jura; src: url(\'./media/Jura-Medium.ttf\'); } ',
 
   '.blocklyText {',
     'cursor: default;',
