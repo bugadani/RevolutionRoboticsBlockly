@@ -651,6 +651,7 @@ Blockly.Toolbox.TreeControl.prototype.createNode = function(opt_html) {
  */
 Blockly.Toolbox.TreeControl.prototype.setSelectedItem = function(node) {
   var toolbox = this.toolbox_;
+  
   if (node == this.selectedItem_ || node == toolbox.tree_) {
     return;
   }
@@ -667,6 +668,11 @@ Blockly.Toolbox.TreeControl.prototype.setSelectedItem = function(node) {
   var oldNode = this.getSelectedItem();
   goog.ui.tree.TreeControl.prototype.setSelectedItem.call(this, node);
   if (node && node.blocks && node.blocks.length) {
+    // itt kene megoldani
+    if (toolbox.workspace_.scale !== 1) {
+      toolbox.workspace_.restoreWorkspace();
+    }
+
     toolbox.flyout_.show(node.blocks);
     // Scroll the flyout to the top if the category has changed.
     if (toolbox.lastCategory_ != node) {
@@ -730,7 +736,7 @@ Blockly.Toolbox.TreeNode.prototype.getExpandIconSafeHtml = function() {
  */
 Blockly.Toolbox.TreeNode.prototype.onClick_ = function(_e) {
   // Expand icon.
-  if (this.hasChildren() && this.isUserCollapsible_) {
+  if (this.hasChildren() && this.isUserCollapsible_) {     
     this.toggle();
     this.select();
   } else if (this.isSelected()) {
