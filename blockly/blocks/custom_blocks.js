@@ -755,7 +755,24 @@ Blockly.Blocks['play_tune'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.TUNE, 15, 15, '*'), 'TUNE_IMAGE')
         .appendField('play tune')
-        .appendField(new Blockly.FieldDropdown([['boci', 'boci'], ['pipi', 'pipi']]), 'IN_SOUND');
+        .appendField(new Blockly.FieldDropdown([
+          ['🔉', 'siren'],
+          ['😸', 'cat'],
+          ['📯', 'car_horn'],
+          ['🤖', 'robot'],
+          ['📟', 'robot2'],
+          ['🛑', 'buzzer'],
+          ['😱', 'oh_no'],
+          ['🤠', 'yee_haw'],
+          ['🏍', 'engine_revving'],
+          ['🎉', 'ta_da'],
+          ['🙊', 'uh_oh'],
+          ['🔔', 'bell'],
+          ['🐤', 'duck'],
+          ['⏰', 'alarm_clock'],
+          ['🐯', 'lion'],
+          ['🐶', 'dog']
+        ]), 'IN_SOUND');
     this.setColour('#f8bc08');
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
