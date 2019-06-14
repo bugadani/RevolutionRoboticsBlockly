@@ -23,7 +23,7 @@ Blockly.Python['block_wait'] = function(block) {
 
 // Generator block_global_timer
 Blockly.Python['block_global_timer'] = function(block) {
-  var code = 'Control.get_global_timer()\n';
+  var code = 'robot.time()';
   return [code, Blockly.Python.ORDER_NONE];
 };
 
