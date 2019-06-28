@@ -11,12 +11,45 @@ function map2DArrayToKeyValueArray(array) {
 }
 
 function mapOptionSelectorTypeToTitle(promptType) {
-  // TODO: Map prompt types to titles
-  return `Title of ${promptType}`;
+  if (promptType.includes('direction_selector')) promptType = 'direction_selector';
+  if (promptType.includes('logic_boolean.bool')) promptType = 'logic_boolean.bool';
+  if (promptType.includes('unit_speed_selector')) promptType = 'unit_speed_selector';
+
+  switch (promptType) {
+    case 'direction_selector':
+      return 'Choose a direction!';
+      break;
+    case 'block_drive.unit_rotation_selector':
+      return 'Make your choice!';
+      break;
+    case 'unit_speed_selector':
+    case 'block_motor.unit_limit_selector':
+    case 'block_stop_motor.stop_action_selector':
+    case 'block_stop_all_motors.stop_all_action_selector':
+      return 'What is your preference?';
+      break;
+    case 'logic_boolean.bool':
+      return 'True or False?';
+      break;
+    case 'math_arithmetic2.operator_selector':
+      return 'Which operation to perform?';
+      break;
+    case 'math_trig2.math_trig_selector':
+      return 'Pick a function!';
+      break;
+    case 'math_round2.operator_selector':
+      return 'How to round?';
+      break;
+  }
+
+  return 'Choose an option!';
 }
 
 function transformBlockContextTitle(title) {
-  return title.replace('block_', '').replace(/_/g, ' ');
+  return title
+    .replace('block_', '')
+    .replace('2', '')
+    .replace(/_/g, ' ');
 }
 
 function calculateMinMaxValueForSlider(sourceBlock) {
@@ -85,9 +118,9 @@ Blockly.NativeBridge.slider = function(type, title, defaultValue, sourceBlock, c
 
 Blockly.NativeBridge.blockContext = function(title, comment, callback) {
   var contextObject = {
-    title: title,
+    title: transformBlockContextTitle(title),
     comment: comment
   };
 
-  Blockly.prompt(transformBlockContextTitle(title), JSON.stringify(contextObject), callback);
+  Blockly.prompt('block_context', JSON.stringify(contextObject), callback);
 };
