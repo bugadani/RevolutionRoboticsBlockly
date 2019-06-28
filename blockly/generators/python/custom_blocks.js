@@ -439,8 +439,8 @@ Blockly.Python['math_random_int2'] = function(block) {
 };
 
 Blockly.Python['colour_rgb2'] = function(block) {
-  // Compose a colour from RGB components expressed as percentages.
-  var functionName = Blockly.Python.provideFunction_('colour_rgb', [
+  // Compose a color from RGB components expressed as percentages.
+  var functionName = Blockly.Python.provideFunction_('color_rgb', [
     'def ' + Blockly.Python.FUNCTION_NAME_PLACEHOLDER_ + '(r, g, b):',
     '  r = round(min(100, max(0, r)) * 2.55)',
     '  g = round(min(100, max(0, g)) * 2.55)',
@@ -457,12 +457,12 @@ Blockly.Python['colour_rgb2'] = function(block) {
 Blockly.Python['logic_compare2'] = function(block) {
   // Comparison operator.
   var OPERATORS = {
-    'EQ': '==',
-    'NEQ': '!=',
-    'LT': '<',
-    'LTE': '<=',
-    'GT': '>',
-    'GTE': '>='
+    EQ: '==',
+    NEQ: '!=',
+    LT: '<',
+    LTE: '<=',
+    GT: '>',
+    GTE: '>='
   };
   var operator = OPERATORS[block.getFieldValue('LOGIC_SELECTOR')];
   var order = Blockly.Python.ORDER_RELATIONAL;

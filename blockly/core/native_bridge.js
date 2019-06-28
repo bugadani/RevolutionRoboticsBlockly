@@ -15,6 +15,10 @@ function mapOptionSelectorTypeToTitle(promptType) {
   return `Title of ${promptType}`;
 }
 
+function transformBlockContextTitle(title) {
+  return title.replace('block_', '').replace(/_/g, ' ');
+}
+
 function calculateMinMaxValueForSlider(sourceBlock) {
   var parentInputList = sourceBlock.getParent().inputList;
   var lastField = parentInputList[parentInputList.length - 1].fieldRow[0];
@@ -85,5 +89,5 @@ Blockly.NativeBridge.blockContext = function(title, comment, callback) {
     comment: comment
   };
 
-  Blockly.prompt('block_context', JSON.stringify(contextObject), callback);
+  Blockly.prompt(transformBlockContextTitle(title), JSON.stringify(contextObject), callback);
 };

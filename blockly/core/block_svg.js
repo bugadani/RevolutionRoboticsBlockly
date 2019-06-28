@@ -645,10 +645,9 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
 
   // Save the current block in a variable for use in closures.
   var block = this;
+  console.log(block);
 
-  Blockly.NativeBridge.blockContext('TODO: Title for context', block.getCommentText(), function(
-      actionString
-  ) {
+  Blockly.NativeBridge.blockContext(block.type, block.getCommentText(), function(actionString) {
     if (actionString) {
       var ACTION_TYPE = Blockly.NativeBridge.CONTEXT_ACTION_TYPE;
       var action = JSON.parse(actionString);

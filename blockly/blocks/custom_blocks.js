@@ -785,7 +785,7 @@ Blockly.Blocks['play_tune'] = {
 // Block for composing a colour from RGB components.
 Blockly.Blocks['colour_rgb2'] = {
   init: function() {
-    this.appendDummyInput().appendField('colour with red');
+    this.appendDummyInput().appendField('color with red');
 
     var redValueInput = this.appendValueInput('RED').setCheck('Number');
     createShadowElement(this.workspace, 'math_number', redValueInput, '0');
@@ -809,7 +809,7 @@ Blockly.Blocks['colour_rgb2'] = {
 // Block for repeat n times (external number).
 Blockly.Blocks['logic_compare2'] = {
   init: function() {
-   
+
     this.appendValueInput('A').setCheck('Number');
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
