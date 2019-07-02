@@ -289,7 +289,7 @@ Blockly.Blocks['block_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.ENGINE, 15, 15, '*'), 'ENGINE_IMAGE')
         .appendField('move motor')
-        .appendField(new Blockly.FieldTextInput('M1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['clockwise', 'Motor.DIR_CW'],
@@ -334,7 +334,7 @@ Blockly.Blocks['spin_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.SPIN, 15, 15, '*'), 'SPIN_IMAGE')
         .appendField('spin motor')
-        .appendField(new Blockly.FieldTextInput('M1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['clockwise', 'Motor.DIR_CW'],
@@ -366,7 +366,7 @@ Blockly.Blocks['block_stop_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.STOP, 15, 15, '*'), 'STOP_IMAGE')
         .appendField('stop motor')
-        .appendField(new Blockly.FieldTextInput('M1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['Stop & hold', 'Motor.ACTION_STOP_AND_HOLD'],
@@ -412,7 +412,7 @@ Blockly.Blocks['block_ultrasonic_sensor'] = {
             'ULTRASONIC_IMAGE'
         )
         .appendField('read')
-        .appendField(new Blockly.FieldTextInput('S1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('s1'), 'NAME_INPUT')
         .appendField('ultrasonic sensor');
     this.setOutput(true, 'Number');
     this.setStyle('colour_blocks');
@@ -427,7 +427,7 @@ Blockly.Blocks['block_bumper'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.BUMPER, 15, 15, '*'), 'BUMPER_IMAGE')
         .appendField('read')
-        .appendField(new Blockly.FieldTextInput('S1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('s1'), 'NAME_INPUT')
         .appendField('bumper switch');
 
     this.setOutput(true, 'Boolean');
@@ -755,24 +755,27 @@ Blockly.Blocks['play_tune'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.TUNE, 15, 15, '*'), 'TUNE_IMAGE')
         .appendField('play tune')
-        .appendField(new Blockly.FieldDropdown([
-          ['🔉', 'siren'],
-          ['😸', 'cat'],
-          ['📯', 'car_horn'],
-          ['🤖', 'robot'],
-          ['📟', 'robot2'],
-          ['🛑', 'buzzer'],
-          ['😱', 'oh_no'],
-          ['🤠', 'yee_haw'],
-          ['🏍', 'engine_revving'],
-          ['🎉', 'ta_da'],
-          ['🙊', 'uh_oh'],
-          ['🔔', 'bell'],
-          ['🐤', 'duck'],
-          ['⏰', 'alarm_clock'],
-          ['🐯', 'lion'],
-          ['🐶', 'dog']
-        ]), 'IN_SOUND');
+        .appendField(
+            new Blockly.FieldDropdown([
+              ['🔉', 'siren'],
+              ['😸', 'cat'],
+              ['📯', 'car_horn'],
+              ['🤖', 'robot'],
+              ['📟', 'robot2'],
+              ['🛑', 'buzzer'],
+              ['😱', 'oh_no'],
+              ['🤠', 'yee_haw'],
+              ['🏍', 'engine_revving'],
+              ['🎉', 'ta_da'],
+              ['🙊', 'uh_oh'],
+              ['🔔', 'bell'],
+              ['🐤', 'duck'],
+              ['⏰', 'alarm_clock'],
+              ['🐯', 'lion'],
+              ['🐶', 'dog']
+            ]),
+            'IN_SOUND'
+        );
     this.setColour('#f8bc08');
     this.setInputsInline(false);
     this.setPreviousStatement(true, null);
@@ -809,7 +812,6 @@ Blockly.Blocks['colour_rgb2'] = {
 // Block for repeat n times (external number).
 Blockly.Blocks['logic_compare2'] = {
   init: function() {
-
     this.appendValueInput('A').setCheck('Number');
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([

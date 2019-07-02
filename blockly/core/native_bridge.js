@@ -71,11 +71,19 @@ Blockly.NativeBridge.CONTEXT_ACTION_TYPE = {
 Blockly.NativeBridge.createPromptType = function(sourceBlock, field) {
   if (sourceBlock.isShadow()) {
     var parentBlock = sourceBlock.getParent();
-    var childrenIDs = parentBlock.getChildren().map(child => child.id);
-    var index = childrenIDs.findIndex(id => sourceBlock.id === id);
+    var childrenIDs = parentBlock.getChildren().map(function(child) {
+      return child.id;
+    });
+    var index = childrenIDs.findIndex(function(id) {
+      return sourceBlock.id === id;
+    });
     var inputNames = parentBlock.inputList
-      .filter(input => input.type === 1)
-      .map(input => input.name);
+      .filter(function(input) {
+        return input.type === 1;
+      })
+      .map(function(input) {
+        return input.name;
+      });
 
     var fieldName = inputNames[index].toLowerCase();
 
