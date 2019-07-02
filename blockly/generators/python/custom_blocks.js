@@ -17,6 +17,7 @@ Blockly.Python['block_terminate_all'] = function(block) {
 // Generator block_wait
 Blockly.Python['block_wait'] = function(block) {
   var value_wait = Blockly.Python.valueToCode(block, 'WAIT', Blockly.Python.ORDER_ATOMIC);
+  Blockly.Python.definitions_['import_time'] = 'import time';
   var code = 'time.sleep(' + value_wait + ')\n';
   return code;
 };

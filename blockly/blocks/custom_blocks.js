@@ -277,11 +277,20 @@ Blockly.Blocks['block_drive'] = {
   onchange: function(event) {
     if (event instanceof Blockly.Events.Create) {
       var driveBlock = this.workspace.getBlockById(event.blockId);
-      var directionSelectorValue = driveBlock.getField('DIRECTION_SELECTOR').getValue();
-      var imageField = driveBlock.getField('DIRECTION_IMAGE');
-      imageField.setValue(CUSTOM_IMAGES[directionSelectorValue.replace('Motor.', '')]);
-      var labelField = driveBlock.getField('DIRECTION_LABEL');
-      labelField.setText(getDirectionLabelText(directionSelectorValue));
+      var directionSelector =
+        driveBlock !== null ? driveBlock.getField('DIRECTION_SELECTOR') : null;
+
+      if (directionSelector) {
+        var imageField = driveBlock.getField('DIRECTION_IMAGE');
+        if (imageField) {
+          imageField.setValue(CUSTOM_IMAGES[directionSelector.getValue().replace('Motor.', '')]);
+        }
+
+        var labelField = driveBlock.getField('DIRECTION_LABEL');
+        if (labelField) {
+          labelField.setText(getDirectionLabelText(directionSelector.getValue()));
+        }
+      }
     }
 
     if (event instanceof Blockly.Events.Change) {
@@ -602,6 +611,14 @@ Blockly.Blocks['math_random_int2'] = {
     this.setStyle('math_blocks');
     this.setTooltip('%{BKY_MATH_RANDOM_INT_TOOLTIP}');
     this.setHelpUrl('%{BKY_MATH_RANDOM_INT_HELPURL}');
+  },
+  onchange: function(event) {
+    if (event instanceof Blockly.Events.Change) {
+      var randomBlock = this.workspace.getBlockById(event.blockId);
+      var input = randomBlock.inputList[0];
+      var numberField = input.fieldRow[0];
+      numberField.setValue(Math.round(event.newValue));
+    }
   }
 };
 
