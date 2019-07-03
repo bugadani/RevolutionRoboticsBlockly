@@ -30,7 +30,6 @@ goog.require('Blockly.utils');
 
 goog.require('goog.math.Rect');
 
-
 /**
  * Class for a trash can.
  * @param {!Blockly.Workspace} workspace The workspace to sit in.
@@ -58,7 +57,6 @@ Blockly.Trashcan = function(workspace) {
    */
   this.contents_ = [];
 
-
   if (this.workspace_.options.maxTrashcanContents <= 0) {
     return;
   }
@@ -68,18 +66,20 @@ Blockly.Trashcan = function(workspace) {
     disabledPatternId: this.workspace_.options.disabledPatternId,
     parentWorkspace: this.workspace_,
     RTL: this.workspace_.RTL,
-    oneBasedIndex: this.workspace_.options.oneBasedIndex,
+    oneBasedIndex: this.workspace_.options.oneBasedIndex
   };
   // Create vertical or horizontal flyout.
   if (this.workspace_.horizontalLayout) {
     flyoutWorkspaceOptions.toolboxPosition =
-        this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_TOP ?
-        Blockly.TOOLBOX_AT_BOTTOM : Blockly.TOOLBOX_AT_TOP;
+      this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_TOP
+        ? Blockly.TOOLBOX_AT_BOTTOM
+        : Blockly.TOOLBOX_AT_TOP;
     this.flyout_ = new Blockly.HorizontalFlyout(flyoutWorkspaceOptions);
   } else {
     flyoutWorkspaceOptions.toolboxPosition =
-      this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT ?
-        Blockly.TOOLBOX_AT_LEFT : Blockly.TOOLBOX_AT_RIGHT;
+      this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT
+        ? Blockly.TOOLBOX_AT_LEFT
+        : Blockly.TOOLBOX_AT_RIGHT;
     this.flyout_ = new Blockly.VerticalFlyout(flyoutWorkspaceOptions);
   }
   this.workspace_.addChangeListener(this.onDelete_());
@@ -224,48 +224,62 @@ Blockly.Trashcan.prototype.createDom = function() {
         clip-path="url(#blocklyTrashLidClipPath837493)"></image>
   </g>
   */
-  this.svgGroup_ = Blockly.utils.createSvgElement('g',
-      {'class': 'blocklyTrash'}, null);
+  this.svgGroup_ = Blockly.utils.createSvgElement('g', { class: 'blocklyTrash' }, null);
   var clip;
   var rnd = String(Math.random()).substring(2);
-  clip = Blockly.utils.createSvgElement('clipPath',
-      {'id': 'blocklyTrashBodyClipPath' + rnd},
-      this.svgGroup_);
-  Blockly.utils.createSvgElement('rect',
+  clip = Blockly.utils.createSvgElement(
+      'clipPath',
+      { id: 'blocklyTrashBodyClipPath' + rnd },
+      this.svgGroup_
+  );
+  Blockly.utils.createSvgElement(
+      'rect',
       {
-        'width': this.WIDTH_,
-        'height': this.BODY_HEIGHT_,
-        'y': this.LID_HEIGHT_
+        width: this.WIDTH_,
+        height: this.BODY_HEIGHT_,
+        y: this.LID_HEIGHT_
       },
-      clip);
-  var body = Blockly.utils.createSvgElement('image',
+      clip
+  );
+  var body = Blockly.utils.createSvgElement(
+      'image',
       {
-        'width': Blockly.SPRITE.width,
-        'x': -this.SPRITE_LEFT_,
-        'height': Blockly.SPRITE.height,
-        'y': -this.SPRITE_TOP_,
+        width: Blockly.SPRITE.width,
+        x: -this.SPRITE_LEFT_,
+        height: Blockly.SPRITE.height,
+        y: -this.SPRITE_TOP_,
         'clip-path': 'url(#blocklyTrashBodyClipPath' + rnd + ')'
       },
-      this.svgGroup_);
-  body.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
-      this.workspace_.options.pathToMedia + Blockly.SPRITE.url);
+      this.svgGroup_
+  );
+  body.setAttributeNS(
+      'http://www.w3.org/1999/xlink',
+      'xlink:href',
+      this.workspace_.options.pathToMedia + Blockly.SPRITE.url
+  );
 
-  clip = Blockly.utils.createSvgElement('clipPath',
-      {'id': 'blocklyTrashLidClipPath' + rnd},
-      this.svgGroup_);
-  Blockly.utils.createSvgElement('rect',
-      {'width': this.WIDTH_, 'height': this.LID_HEIGHT_}, clip);
-  this.svgLid_ = Blockly.utils.createSvgElement('image',
+  clip = Blockly.utils.createSvgElement(
+      'clipPath',
+      { id: 'blocklyTrashLidClipPath' + rnd },
+      this.svgGroup_
+  );
+  Blockly.utils.createSvgElement('rect', { width: this.WIDTH_, height: this.LID_HEIGHT_ }, clip);
+  this.svgLid_ = Blockly.utils.createSvgElement(
+      'image',
       {
-        'width': Blockly.SPRITE.width,
-        'x': -this.SPRITE_LEFT_,
-        'height': Blockly.SPRITE.height,
-        'y': -this.SPRITE_TOP_,
+        width: Blockly.SPRITE.width,
+        x: -this.SPRITE_LEFT_,
+        height: Blockly.SPRITE.height,
+        y: -this.SPRITE_TOP_,
         'clip-path': 'url(#blocklyTrashLidClipPath' + rnd + ')'
       },
-      this.svgGroup_);
-  this.svgLid_.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href',
-      this.workspace_.options.pathToMedia + Blockly.SPRITE.url);
+      this.svgGroup_
+  );
+  this.svgLid_.setAttributeNS(
+      'http://www.w3.org/1999/xlink',
+      'xlink:href',
+      this.workspace_.options.pathToMedia + Blockly.SPRITE.url
+  );
 
   Blockly.bindEventWithChecks_(this.svgGroup_, 'mouseup', this, this.click);
   // bindEventWithChecks_ quashes events too aggressively. See:
@@ -286,8 +300,7 @@ Blockly.Trashcan.prototype.createDom = function() {
  */
 Blockly.Trashcan.prototype.init = function(verticalSpacing) {
   if (this.workspace_.options.maxTrashcanContents > 0) {
-    Blockly.utils.insertAfter(this.flyout_.createDom('svg'),
-        this.workspace_.getParentSvg());
+    Blockly.utils.insertAfter(this.flyout_.createDom('svg'), this.workspace_.getParentSvg());
     this.flyout_.init(this.workspace_);
     this.flyout_.isBlockCreatable_ = function() {
       // All blocks, including disabled ones, can be dragged from the
@@ -330,11 +343,17 @@ Blockly.Trashcan.prototype.position = function() {
     // There are no metrics available (workspace is probably not visible).
     return;
   }
-  if (metrics.toolboxPosition == Blockly.TOOLBOX_AT_LEFT ||
-      (this.workspace_.horizontalLayout && !this.workspace_.RTL)) {
+  if (
+    metrics.toolboxPosition == Blockly.TOOLBOX_AT_LEFT ||
+    (this.workspace_.horizontalLayout && !this.workspace_.RTL)
+  ) {
     // Toolbox starts in the left corner.
-    this.left_ = metrics.viewWidth + metrics.absoluteLeft -
-        this.WIDTH_ - this.MARGIN_SIDE_ - Blockly.Scrollbar.scrollbarThickness;
+    this.left_ =
+      metrics.viewWidth +
+      metrics.absoluteLeft -
+      this.WIDTH_ -
+      this.MARGIN_SIDE_ -
+      Blockly.Scrollbar.scrollbarThickness;
   } else {
     // Toolbox starts in the right corner.
     this.left_ = this.MARGIN_SIDE_ + Blockly.Scrollbar.scrollbarThickness;
@@ -343,12 +362,14 @@ Blockly.Trashcan.prototype.position = function() {
   if (metrics.toolboxPosition == Blockly.TOOLBOX_AT_BOTTOM) {
     this.top_ = this.verticalSpacing_;
   } else {
-    this.top_ = metrics.viewHeight + metrics.absoluteTop -
-        (this.BODY_HEIGHT_ + this.LID_HEIGHT_) - this.verticalSpacing_;
+    this.top_ =
+      metrics.viewHeight +
+      metrics.absoluteTop -
+      (this.BODY_HEIGHT_ + this.LID_HEIGHT_) -
+      this.verticalSpacing_;
   }
 
-  this.svgGroup_.setAttribute('transform',
-      'translate(' + this.left_ + ',' + this.top_ + ')');
+  this.svgGroup_.setAttribute('transform', 'translate(' + this.left_ + ',' + this.top_ + ')');
 };
 
 /**
@@ -366,7 +387,6 @@ Blockly.Trashcan.prototype.getClientRect = function() {
   var width = this.WIDTH_ + 2 * this.MARGIN_HOTSPOT_;
   var height = this.LID_HEIGHT_ + this.BODY_HEIGHT_ + 2 * this.MARGIN_HOTSPOT_;
   return new goog.math.Rect(left, top, width, height);
-
 };
 
 /**
@@ -405,12 +425,19 @@ Blockly.Trashcan.prototype.animateLid_ = function() {
  * @private
  */
 Blockly.Trashcan.prototype.setLidAngle_ = function(lidAngle) {
-  var openAtRight = this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT
-      || (this.workspace_.horizontalLayout && this.workspace_.RTL);
-  this.svgLid_.setAttribute('transform', 'rotate(' +
-      (openAtRight ? -lidAngle : lidAngle) + ',' +
-      (openAtRight ? 4 : this.WIDTH_ - 4) + ',' +
-      (this.LID_HEIGHT_ - 2) + ')');
+  var openAtRight =
+    this.workspace_.toolboxPosition == Blockly.TOOLBOX_AT_RIGHT ||
+    (this.workspace_.horizontalLayout && this.workspace_.RTL);
+  this.svgLid_.setAttribute(
+      'transform',
+      'rotate(' +
+      (openAtRight ? -lidAngle : lidAngle) +
+      ',' +
+      (openAtRight ? 4 : this.WIDTH_ - 4) +
+      ',' +
+      (this.LID_HEIGHT_ - 2) +
+      ')'
+  );
 };
 
 /**
@@ -430,9 +457,14 @@ Blockly.Trashcan.prototype.click = function() {
   }
 
   var xml = [];
-  for (var i = 0, text; text = this.contents_[i]; i++) {
+  for (var i = 0, text; (text = this.contents_[i]); i++) {
     xml[i] = Blockly.Xml.textToDom(text).firstChild;
   }
+  // TODO: Localize remove 'Loading...' element
+  xml = xml.filter(function(element) {
+    return element.textContent !== 'Loading...';
+  });
+
   this.flyout_.show(xml);
 };
 
@@ -475,12 +507,11 @@ Blockly.Trashcan.prototype.onDelete_ = function() {
         return;
       }
       trashcan.contents_.unshift(cleanedXML);
-      if (trashcan.contents_.length >
-          trashcan.workspace_.options.maxTrashcanContents) {
+      if (trashcan.contents_.length > trashcan.workspace_.options.maxTrashcanContents) {
         trashcan.contents_.splice(
             trashcan.workspace_.options.maxTrashcanContents,
-            trashcan.contents_.length -
-            trashcan.workspace_.options.maxTrashcanContents);
+            trashcan.contents_.length - trashcan.workspace_.options.maxTrashcanContents
+        );
       }
 
       trashcan.hasBlocks_ = true;
