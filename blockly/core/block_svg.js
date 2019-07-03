@@ -657,10 +657,6 @@ Blockly.BlockSvg.prototype.showContextMenu_ = function(e) {
           block.setCommentText(action.payload);
           break;
 
-        case ACTION_TYPE.REMOVE_COMMENT:
-          block.setCommentText(null);
-          break;
-
         case ACTION_TYPE.DELETE_BLOCK:
           Blockly.ContextMenu.blockDeleteOption(block).callback();
           break;
