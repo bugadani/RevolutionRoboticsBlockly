@@ -555,8 +555,7 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.blocklyFlyoutBackground {',
-    'fill: #000000;',
-    'fill-opacity: .9;',
+    'fill: #1D1D1D;',
   '}',
 
   '.blocklyTransparentBackground {',
@@ -585,8 +584,8 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.toolboxScrollbarHandle {',
-    'fill: #000000;',
-    'fill-opacity: .9;',
+    'fill: #1D1D1D;',
+    'fill-opacity: .92;',
   '}',
 
   '.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle,',
@@ -808,35 +807,35 @@ Blockly.Css.CONTENT = [
   '}',
 
   '.motorIcon:before {',
-    'background-image: url("./media/moves.svg");',   
+    'background-image: url("./media/moves.svg");',
   '}',
 
   '.sensorIcon:before {',
-    'background-image: url("./media/sensors.svg");',   
+    'background-image: url("./media/sensors.svg");',
   '}',
 
   '.loopsIcon:before {',
-  'background-image: url("./media/loop.svg");',   
+  'background-image: url("./media/loop.svg");',
   '}',
 
   '.logicIcon:before {',
-  'background-image: url("./media/logic.svg");',   
+  'background-image: url("./media/logic.svg");',
   '}',
 
   '.mathIcon:before {',
-  'background-image: url("./media/math.svg");',   
+  'background-image: url("./media/math.svg");',
   '}',
 
   '.timeIcon:before {',
-  'background-image: url("./media/time.svg");',   
+  'background-image: url("./media/time.svg");',
   '}',
 
   '.variablesIcon:before {',
-  'background-image: url("./media/variables.svg");',   
+  'background-image: url("./media/variables.svg");',
   '}',
 
   '.functionsIcon:before {',
-  'background-image: url("./media/functions.svg");',   
+  'background-image: url("./media/functions.svg");',
   '}',
 
   /* End of Icons */
