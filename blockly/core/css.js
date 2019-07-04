@@ -556,6 +556,7 @@ Blockly.Css.CONTENT = [
 
   '.blocklyFlyoutBackground {',
     'fill: #1D1D1D;',
+    'fill-opacity: .92;',
   '}',
 
   '.blocklyTransparentBackground {',
@@ -585,7 +586,7 @@ Blockly.Css.CONTENT = [
 
   '.toolboxScrollbarHandle {',
     'fill: #1D1D1D;',
-    'fill-opacity: .92;',
+    'fill-opacity: 0;',
   '}',
 
   '.blocklyScrollbarBackground:hover+.blocklyScrollbarHandle,',

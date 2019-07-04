@@ -271,15 +271,15 @@ Blockly.Blocks['block_drive'] = {
         );
 
     var rotationValueInput = this.appendValueInput('ROTATION').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', rotationValueInput);
+    createShadowElement(this.workspace, 'math_number', rotationValueInput, 3);
 
     this.appendDummyInput().appendField(
-        new Blockly.FieldDropdown([['rotation', 'Motor.UNIT_ROT'], ['sec', 'Motor.UNIT_SEC']]),
+        new Blockly.FieldDropdown([['sec', 'Motor.UNIT_SEC'], ['rotation', 'Motor.UNIT_ROT']]),
         'UNIT_ROTATION_SELECTOR'
     );
 
     var speedValueInput = this.appendValueInput('SPEED_SLIDER').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', speedValueInput);
+    createShadowElement(this.workspace, 'math_number', speedValueInput, 10);
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
@@ -333,7 +333,7 @@ Blockly.Blocks['block_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.ENGINE, 15, 15, '*'), 'ENGINE_IMAGE')
         .appendField('move motor')
-        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('motor1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['clockwise', 'Motor.DIR_CW'],
@@ -343,11 +343,11 @@ Blockly.Blocks['block_motor'] = {
         );
 
     var amountValueInput = this.appendValueInput('AMOUNT').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', amountValueInput);
+    createShadowElement(this.workspace, 'math_number', amountValueInput, 3);
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
-          ['time', 'Motor.UNIT_SEC'],
+          ['sec', 'Motor.UNIT_SEC'],
           ['degree', 'Motor.UNIT_DEG'],
           ['numOfRot', 'Motor.UNIT_ROT']
         ]),
@@ -355,7 +355,7 @@ Blockly.Blocks['block_motor'] = {
     );
 
     var limitValueInput = this.appendValueInput('LIMIT_SLIDER').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', limitValueInput);
+    createShadowElement(this.workspace, 'math_number', limitValueInput, 10);
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
@@ -378,7 +378,7 @@ Blockly.Blocks['spin_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.SPIN, 15, 15, '*'), 'SPIN_IMAGE')
         .appendField('spin motor')
-        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('motor1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['clockwise', 'Motor.DIR_CW'],
@@ -388,10 +388,10 @@ Blockly.Blocks['spin_motor'] = {
         );
 
     var rotationValueInput = this.appendValueInput('ROTATION').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', rotationValueInput);
+    createShadowElement(this.workspace, 'math_number', rotationValueInput, 10);
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
-          ['speed', 'Motor.UNIT_SPEED_RPM'],
+          ['rpm', 'Motor.UNIT_SPEED_RPM'],
           ['power', 'Motor.UNIT_SPEED_PWR']
         ]),
         'UNIT_SPEED_SELECTOR'
@@ -410,7 +410,7 @@ Blockly.Blocks['block_stop_motor'] = {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.STOP, 15, 15, '*'), 'STOP_IMAGE')
         .appendField('stop motor')
-        .appendField(new Blockly.FieldTextInput('m1'), 'NAME_INPUT')
+        .appendField(new Blockly.FieldTextInput('motor1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
               ['Stop & hold', 'Motor.ACTION_STOP_AND_HOLD'],
@@ -455,9 +455,8 @@ Blockly.Blocks['block_ultrasonic_sensor'] = {
             new Blockly.FieldImage(CUSTOM_IMAGES.ULTRASONIC, 15, 15, '*'),
             'ULTRASONIC_IMAGE'
         )
-        .appendField('read')
-        .appendField(new Blockly.FieldTextInput('s1'), 'NAME_INPUT')
-        .appendField('ultrasonic sensor');
+        .appendField(new Blockly.FieldTextInput('ultrasonic1'), 'NAME_INPUT')
+        .appendField('distance');
     this.setOutput(true, 'Number');
     this.setStyle('colour_blocks');
     this.setTooltip('');
@@ -470,9 +469,8 @@ Blockly.Blocks['block_bumper'] = {
   init: function() {
     this.appendDummyInput()
         .appendField(new Blockly.FieldImage(CUSTOM_IMAGES.BUMPER, 15, 15, '*'), 'BUMPER_IMAGE')
-        .appendField('read')
-        .appendField(new Blockly.FieldTextInput('s1'), 'NAME_INPUT')
-        .appendField('bumper switch');
+        .appendField(new Blockly.FieldTextInput('bumper1'), 'NAME_INPUT')
+        .appendField('pressed');
 
     this.setOutput(true, 'Boolean');
     this.setStyle('colour_blocks');
