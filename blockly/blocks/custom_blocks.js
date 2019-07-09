@@ -387,7 +387,7 @@ Blockly.Blocks['spin_motor'] = {
             'DIRECTION_SELECTOR'
         );
 
-    var rotationValueInput = this.appendValueInput('ROTATION').setCheck('Number');
+    var rotationValueInput = this.appendValueInput('ROTATION_SLIDER').setCheck('Number');
     createShadowElement(this.workspace, 'math_number', rotationValueInput, 10);
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([

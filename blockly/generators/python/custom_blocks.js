@@ -291,7 +291,11 @@ Blockly.Python['if_then'] = function(block) {
 Blockly.Python['spin_motor'] = function(block) {
   var text_name = block.getFieldValue('NAME_INPUT');
   var dropdown_direction = block.getFieldValue('DIRECTION_SELECTOR');
-  var number_rotation = Blockly.Python.valueToCode(block, 'ROTATION', Blockly.Python.ORDER_ATOMIC);
+  var number_rotation = Blockly.Python.valueToCode(
+    block,
+    'ROTATION_SLIDER',
+    Blockly.Python.ORDER_ATOMIC
+  );
   var dropdown_unit = block.getFieldValue('UNIT_SPEED_SELECTOR');
 
   var code =

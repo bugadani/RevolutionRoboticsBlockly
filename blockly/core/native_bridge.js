@@ -57,7 +57,10 @@ function calculateMinMaxValueForSlider(sourceBlock) {
   var lastField = parentInputList[parentInputList.length - 1].fieldRow[0];
   var fieldValue = lastField.getValue();
 
-  return [0, fieldValue == 'Motor.UNIT_SPEED_RPM' ? 170 : 100];
+  return {
+    min: 0,
+    max: fieldValue == 'Motor.UNIT_SPEED_RPM' ? 170 : 100
+  };
 }
 
 Blockly.NativeBridge.CONTEXT_ACTION_TYPE = {
@@ -117,8 +120,8 @@ Blockly.NativeBridge.slider = function(type, title, defaultValue, sourceBlock, c
   var sliderObject = {
     title: title,
     defaultValue: defaultValue,
-    minimum: minMax[0],
-    maximum: minMax[1]
+    minimum: minMax.min,
+    maximum: minMax.max
   };
 
   Blockly.prompt(type, JSON.stringify(sliderObject), callback);
