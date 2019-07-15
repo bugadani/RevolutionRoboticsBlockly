@@ -472,7 +472,7 @@ Blockly.Blocks['block_bumper'] = {
         .appendField('pressed');
 
     this.setOutput(true, 'Boolean');
-    this.setColour('#0264ff');
+    this.setStyle('colour_blocks');
     this.setTooltip('');
     this.setHelpUrl('');
   }
