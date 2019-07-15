@@ -279,7 +279,7 @@ Blockly.Blocks['block_drive'] = {
     );
 
     var speedValueInput = this.appendValueInput('SPEED_SLIDER').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', speedValueInput, 10);
+    createShadowElement(this.workspace, 'math_number', speedValueInput, 170);
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
@@ -323,6 +323,27 @@ Blockly.Blocks['block_drive'] = {
         var labelField = driveBlock.getField('DIRECTION_LABEL');
         labelField.setText(getDirectionLabelText(event.newValue));
       }
+
+      if (event.name === 'UNIT_SPEED_SELECTOR') {
+        var driveBlock = this.workspace.getBlockById(event.blockId);
+        var selectedSpeedOption = driveBlock.getField('UNIT_SPEED_SELECTOR').getValue();
+        var maxValue = 170;
+        
+        if (selectedSpeedOption === 'Motor.UNIT_SPEED_PWR') {
+          maxValue = 100;
+        }
+
+        var chidrens = driveBlock.getChildren();
+        // 2nd children is the speed shadow value, 1st input is the FieldNumber
+        var unitRpm = chidrens[1].inputList[0];
+        var shadowValue = unitRpm.fieldRow[0];
+        
+        var currentValue = shadowValue.getValue();
+
+        if (currentValue >= maxValue) {
+          shadowValue.setValue(100);
+        }
+      }
     }
   }
 };
@@ -336,8 +357,8 @@ Blockly.Blocks['block_motor'] = {
         .appendField(new Blockly.FieldTextInput('motor1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
-              ['clockwise', 'Motor.DIR_CW'],
-              ['counter clockwise', 'Motor.DIR_CCW']
+              ['↩️', 'Motor.DIR_CW'],
+              ['↪️', 'Motor.DIR_CCW']
             ]),
             'DIRECTION_SELECTOR'
         );
@@ -355,7 +376,7 @@ Blockly.Blocks['block_motor'] = {
     );
 
     var limitValueInput = this.appendValueInput('LIMIT_SLIDER').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', limitValueInput, 10);
+    createShadowElement(this.workspace, 'math_number', limitValueInput, 170);
 
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
@@ -369,6 +390,30 @@ Blockly.Blocks['block_motor'] = {
     this.setStyle('motor_blocks');
     this.setTooltip('');
     this.setHelpUrl('');
+  },
+  onchange: function(event) {
+    if (event instanceof Blockly.Events.Change) {
+      if (event.name === 'UNIT_LIMIT_SELECTOR') {
+        var driveBlock = this.workspace.getBlockById(event.blockId);
+        var selectedSpeedOption = driveBlock.getField('UNIT_LIMIT_SELECTOR').getValue();
+        var maxValue = 170;
+        
+        if (selectedSpeedOption === 'Motor.UNIT_SPEED_PWR') {
+          maxValue = 100;
+        }
+
+        var chidrens = driveBlock.getChildren();
+        // 2nd children is the speed shadow value, 1st input is the FieldNumber
+        var unitRpm = chidrens[1].inputList[0];
+        var shadowValue = unitRpm.fieldRow[0];
+        
+        var currentValue = shadowValue.getValue();
+
+        if (currentValue >= maxValue) {
+          shadowValue.setValue(100);
+        }
+      }
+    }
   }
 };
 
@@ -381,14 +426,14 @@ Blockly.Blocks['spin_motor'] = {
         .appendField(new Blockly.FieldTextInput('motor1'), 'NAME_INPUT')
         .appendField(
             new Blockly.FieldDropdown([
-              ['clockwise', 'Motor.DIR_CW'],
-              ['counter clockwise', 'Motor.DIR_CCW']
+              ['↩️', 'Motor.DIR_CW'],
+              ['↪️', 'Motor.DIR_CCW']
             ]),
             'DIRECTION_SELECTOR'
         );
 
     var rotationValueInput = this.appendValueInput('ROTATION_SLIDER').setCheck('Number');
-    createShadowElement(this.workspace, 'math_number', rotationValueInput, 10);
+    createShadowElement(this.workspace, 'math_number', rotationValueInput, 170);
     this.appendDummyInput().appendField(
         new Blockly.FieldDropdown([
           ['rpm', 'Motor.UNIT_SPEED_RPM'],
@@ -401,6 +446,31 @@ Blockly.Blocks['spin_motor'] = {
     this.setStyle('motor_blocks');
     this.setTooltip('');
     this.setHelpUrl('');
+  },
+  onchange: function(event) {
+    if (event instanceof Blockly.Events.Change) {
+      if (event.name === 'UNIT_SPEED_SELECTOR') {
+        var driveBlock = this.workspace.getBlockById(event.blockId);
+        var selectedSpeedOption = driveBlock.getField('UNIT_SPEED_SELECTOR').getValue();
+        var maxValue = 170;
+        
+        if (selectedSpeedOption === 'Motor.UNIT_SPEED_PWR') {
+          maxValue = 100;
+        }
+
+        var chidrens = driveBlock.getChildren();
+        
+        // 2nd children is the speed shadow value, 1st input is the FieldNumber
+        var unitRpm = chidrens[0].inputList[0];
+        var shadowValue = unitRpm.fieldRow[0];
+        
+        var currentValue = shadowValue.getValue();
+
+        if (currentValue >= maxValue) {
+          shadowValue.setValue(100);
+        }
+      }
+    }
   }
 };
 
