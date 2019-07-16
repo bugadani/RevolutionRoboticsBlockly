@@ -190,6 +190,7 @@ Blockly.FieldTextInput.prototype.showPromptEditor_ = function() {
     );
   } else {
     Blockly.NativeBridge.input(
+        fieldText.sourceBlock_,
         promptType,
         Blockly.Msg['CHANGE_VALUE_TITLE'],
         fieldText.getText(),

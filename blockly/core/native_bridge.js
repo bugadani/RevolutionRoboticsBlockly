@@ -80,6 +80,7 @@ Blockly.NativeBridge.createPromptType = function(sourceBlock, field) {
     var index = childrenIDs.findIndex(function(id) {
       return sourceBlock.id === id;
     });
+
     var inputNames = parentBlock.inputList
       .filter(function(input) {
         return input.type === 1;
@@ -106,11 +107,24 @@ Blockly.NativeBridge.optionSelector = function(type, defaultKey, options, callba
   Blockly.prompt(type, JSON.stringify(optionSelectorObject), callback);
 };
 
-Blockly.NativeBridge.input = function(type, title, defaultInput, callback) {
-  var textInputObject = {
-    title: title,
+Blockly.NativeBridge.input = function(sourceBlock, type, title, defaultInput, callback) {
+  var textInputObject = {    
     defaultInput: defaultInput
   };
+  var finalTitle = title;
+  if (sourceBlock) {
+    if (sourceBlock.type === 'block_motor' || sourceBlock.type === 'spin_motor'
+      || sourceBlock.type === 'block_stop_motor') {
+      finalTitle = 'Change motor:'
+      textInputObject['subtitle'] = 'Motor:';  
+    }
+    if (sourceBlock.type === 'block_ultrasonic_sensor' || sourceBlock.type === 'block_bumber') {
+      finalTitle = 'Change sensor:'
+      textInputObject['subtitle'] = 'Sensor:';  
+    }        
+  }  
+
+  textInputObject['title'] = finalTitle;  
 
   Blockly.prompt(type, JSON.stringify(textInputObject), callback);
 };
