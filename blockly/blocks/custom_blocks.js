@@ -297,29 +297,31 @@ Blockly.Blocks['block_drive'] = {
   },
   onchange: function(event) {
     if (event instanceof Blockly.Events.Create) {
-      var driveBlock = this.workspace.getBlockById(event.blockId);
-      var directionSelector =
-        driveBlock !== null ? driveBlock.getField('DIRECTION_SELECTOR') : null;
-
-      if (directionSelector) {
-        var imageField = driveBlock.getField('DIRECTION_IMAGE');
-        if (imageField) {
-          imageField.setValue(CUSTOM_IMAGES[directionSelector.getValue().replace('Motor.', '')]);
-        }
+      var blocks = this.workspace.getBlocksByType('block_drive');      
+      for (var i = 0; i < blocks.length; i++) {
+        var driveBlock = blocks[i];
 
         var labelField = driveBlock.getField('DIRECTION_LABEL');
-        if (labelField) {
-          labelField.setText(getDirectionLabelText(directionSelector.getValue()));
+        var directionSelector =
+          driveBlock !== null ? driveBlock.getField('DIRECTION_SELECTOR') : null;
+        if (directionSelector) {
+          var imageField = driveBlock.getField('DIRECTION_IMAGE');
+          if (imageField) {
+            imageField.setValue(CUSTOM_IMAGES[directionSelector.getValue().replace('Motor.', '')]);
+          }
+          if (labelField) {
+            labelField.setText(getDirectionLabelText(directionSelector.getValue()));
+          }
         }
       }
     }
 
-    if (event instanceof Blockly.Events.Change) {
+    if (event instanceof Blockly.Events.Change) {      
       if (event.name === 'DIRECTION_SELECTOR') {
         var driveBlock = this.workspace.getBlockById(event.blockId);
         var imageField = driveBlock.getField('DIRECTION_IMAGE');
+        
         imageField.setValue(CUSTOM_IMAGES[event.newValue.replace('Motor.', '')]);
-
         var labelField = driveBlock.getField('DIRECTION_LABEL');
         labelField.setText(getDirectionLabelText(event.newValue));
       }
