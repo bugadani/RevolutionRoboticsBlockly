@@ -118,7 +118,7 @@ Blockly.NativeBridge.input = function(sourceBlock, type, title, defaultInput, ca
       finalTitle = 'Change motor:'
       textInputObject['subtitle'] = 'Motor:';  
     }
-    if (sourceBlock.type === 'block_ultrasonic_sensor' || sourceBlock.type === 'block_bumber') {
+    if (sourceBlock.type === 'block_ultrasonic_sensor' || sourceBlock.type === 'block_bumper') {
       finalTitle = 'Change sensor:'
       textInputObject['subtitle'] = 'Sensor:';  
     }        
