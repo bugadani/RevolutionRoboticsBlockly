@@ -1,6 +1,6 @@
 #!/bin/sh
 
-compressedBlocklyFullPath=/Users/matepapp/Work/supercharge/revolution-robotics/blockly-js
+compressedBlocklyFullPath=/Users/balazsmaczak/Projects/RevolutionRobotics/RobotControllerAndroid/blocklyRobotics/blocklyjs
 
 cd blockly
 
